@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gabriele D'Annunzio – Pagina immersiva</title>
+  <style>
+    :root {
+      --bg-dark: #050509;
+      --bg-card: rgba(10, 10, 18, 0.9);
+      --accent: #e0a800;
+      --accent-soft: rgba(224, 168, 0, 0.15);
+      --text-main: #f5f5f5;
+      --text-soft: #d0cfd4;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text-main);
+      background: radial-gradient(circle at top, #1a1025 0, #050509 55%, #000 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header.hero {
+      position: relative;
+      padding: 2.5rem 1.5rem 3.5rem;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (max-width: 840px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-bg-orbit {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.7;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(224,168,0,0.12) 0, transparent 55%),
+        radial-gradient(circle at 90% 10%, rgba(255,255,255,0.08) 0, transparent 55%);
+      mix-blend-mode: screen;
+      z-index: -1;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--border-soft);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-bottom: 1rem;
+    }
+
+    .hero-tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(224,168,0,0.8);
+    }
+
+    h1.hero-title {
+      font-size: clamp(2.2rem, 4vw, 3.1rem);
+      line-height: 1.1;
+      margin-bottom: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1.hero-title span {
+      display: block;
+    }
+
+    .hero-title-em {
+      font-weight: 300;
+      font-size: 0.95em;
+      opacity: 0.85;
+    }
+
+    .hero-subtitle {
+      max-width: 520px;
+      color: var(--text-soft);
+      font-size: 0.98rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .pill {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      background: radial-gradient(circle at top, rgba(255,255,255,0.08) 0, rgba(0,0,0,0.7) 60%);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      align-items: center;
+    }
+
+    .btn-main, .btn-ghost {
+      border-radius: 999px;
+      padding: 0.6rem 1.4rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, #f5c94c, #e0a800);
+      color: #12100b;
+      font-weight: 600;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .btn-main:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn-ghost {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: var(--text-soft);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-1px);
+    }
+
+    .btn-main-icon {
+      font-size: 1rem;
+    }
+
+    .hero-note {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 0.4rem;
+    }
+
+    .hero-portrait-wrapper {
+      position: relative;
+      justify-self: center;
+    }
+
+    .hero-portrait-card {
+      width: min(320px, 80vw);
+      aspect-ratio: 3/4;
+      border-radius: 28px;
+      background: radial-gradient(circle at 20% 0%, rgba(255,255,255,0.16) 0, rgba(0,0,0,0.95) 60%);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .hero-portrait-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(224,168,0,0.4) 0, transparent 55%),
+        radial-gradient(circle at 0% 70%, rgba(255,255,255,0.12) 0, transparent 60%);
+      mix-blend-mode: screen;
+      opacity: 0.8;
+    }
+
+    .hero-portrait-silhouette {
+      position: absolute;
+      inset: 12% 10% 25%;
+      border-radius: 48% 52% 45% 55% / 60% 55% 45% 40%;
+      background:
+        radial-gradient(circle at 30% 10%, rgba(255,255,255,0.32) 0, transparent 45%),
+        radial-gradient(circle at 60% 18%, rgba(0,0,0,0.88) 0, rgba(0,0,0,1) 60%);
+      filter: grayscale(1) contrast(1.2);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+    }
+
+    .hero-portrait-base {
+      position: absolute;
+      left: -6%;
+      right: -6%;
+      bottom: 10%;
+      height: 35%;
+      background: radial-gradient(circle at 50% 0%, rgba(20,16,10,0.9) 0, rgba(0,0,0,1) 60%);
+      opacity: 0.9;
+    }
+
+    .hero-portrait-label {
+      position: relative;
+      z-index: 2;
+      padding: 0.6rem 0.7rem;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.75);
+      border: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(14px);
+      font-size: 0.8rem;
+    }
+
+    .hero-portrait-label strong {
+      display: block;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .hero-portrait-label span {
+      display: block;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .hero-quote-chip {
+      position: absolute;
+      top: 9%;
+      right: -2%;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,255,255,0.26);
+      font-size: 0.75rem;
+      max-width: 200px;
+    }
+
+    .hero-quote-chip em {
+      color: rgba(255,255,255,0.76);
+    }
+
+    .floating-pill {
+      position: absolute;
+      bottom: 10%;
+      right: -6%;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(224,168,0,0.65);
+      font-size: 0.7rem;
+      color: #f7e6b0;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    main {
+      flex: 1;
+      padding: 0 1.5rem 2.5rem;
+    }
+
+    .main-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    nav.section-nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: linear-gradient(to bottom, rgba(5,5,9,0.98), rgba(5,5,9,0.96), rgba(5,5,9,0.85));
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      padding: 0.35rem 0.6rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    nav.section-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-list {
+      display: flex;
+      gap: 0.35rem;
+      list-style: none;
+      white-space: nowrap;
+    }
+
+    .nav-chip {
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      border: 1px solid transparent;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: var(--text-soft);
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: background 0.16s ease, color 0.16s ease, border 0.16s ease;
+    }
+
+    .nav-chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+    }
+
+    .nav-chip.active {
+      background: rgba(224,168,0,0.14);
+      border-color: rgba(224,168,0,0.7);
+      color: #ffe9a8;
+    }
+
+    section {
+      margin: 1.7rem 0;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1.6rem;
+    }
+
+    @media (max-width: 860px) {
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-tagline {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-bottom: 1.1rem;
+    }
+
+    .card {
+      border-radius: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 1.3rem 1.4rem;
+    }
+
+    .card-soft {
+      border-radius: 24px;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.06) 0, rgba(0,0,0,0.85) 65%);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 1.2rem 1.3rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin-bottom: 0.6rem;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.7rem;
+    }
+
+    .pill-outline {
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-top: 0.4rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 0.35rem;
+      top: 0.1rem;
+      bottom: 0.1rem;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.25), rgba(255,255,255,0));
+    }
+
+    .timeline-item {
+      margin-bottom: 0.9rem;
+      position: relative;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -1.2rem;
+      top: 0.45rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(224,168,0,0.25);
+    }
+
+    .timeline-year {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.05rem;
+    }
+
+    .timeline-text {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    .badge-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 0.25rem;
+    }
+
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.6rem;
+    }
+
+    @media (max-width: 640px) {
+      .themes-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .theme-card {
+      border-radius: 18px;
+      padding: 0.8rem 0.9rem;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.07) 0, rgba(0,0,0,0.9) 65%);
+      border: 1px solid rgba(255,255,255,0.18);
+      font-size: 0.86rem;
+    }
+
+    .theme-title {
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.2rem;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .theme-tag {
+      font-size: 0.72rem;
+      opacity: 0.75;
+      margin-bottom: 0.35rem;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    @media (max-width: 840px) {
+      .works-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .works-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .work-card {
+      border-radius: 18px;
+      padding: 0.8rem 0.9rem 0.9rem;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.05) 0, rgba(0,0,0,0.95) 60%);
+      border: 1px solid rgba(255,255,255,0.18);
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .work-year {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.7;
+    }
+
+    .work-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .work-tagline {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .work-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(255,255,255,0.72);
+      margin-top: 0.3rem;
+    }
+
+    .quote-block {
+      border-radius: 24px;
+      padding: 1.2rem 1.3rem 1.1rem;
+      background: radial-gradient(circle at 0% 0%, rgba(224,168,0,0.26) 0, rgba(12,10,8,0.96) 55%);
+      border: 1px solid rgba(255,255,255,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-block::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      opacity: 0.06;
+      background-image: radial-gradient(circle at 50% 50%, transparent 60%, rgba(255,255,255,1) 61%, transparent 64%);
+      background-size: 140px 140px;
+      background-repeat: repeat;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    .quote-symbol {
+      font-size: 2rem;
+      line-height: 1;
+      color: rgba(0,0,0,0.4);
+      text-shadow: 0 0 16px rgba(255,255,255,0.6);
+    }
+
+    blockquote {
+      font-size: 1rem;
+      font-style: italic;
+      color: #fff8e4;
+      margin: 0.4rem 0 0.5rem;
+    }
+
+    .quote-author {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .quote-context {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+      margin-top: 0.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .focus-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1rem;
+      margin-top: 0.7rem;
+    }
+
+    @media (max-width: 840px) {
+      .focus-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .focus-card {
+      border-radius: 20px;
+      padding: 0.9rem 1rem;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.05) 0, rgba(0,0,0,0.95) 60%);
+      border: 1px solid rgba(255,255,255,0.18);
+      font-size: 0.88rem;
+    }
+
+    .focus-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 0.3rem;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .focus-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .focus-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .focus-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-top: 0.3rem;
+      background: linear-gradient(135deg, #f5c94c, #e0a800);
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1.3rem 1.5rem 1.8rem;
+      margin-top: 0.8rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    footer .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-pill {
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .note-small {
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="hero">
+      <div class="hero-bg-orbit"></div>
+      <div class="hero-inner">
+        <div>
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            <span>Letteratura italiana · Primo Novecento</span>
+          </div>
+          <h1 class="hero-title">
+            <span>Gabriele D'Annunzio</span>
+            <span class="hero-title-em">vita, mito, estetica del vivere</span>
+          </h1>
+          <p class="hero-subtitle">
+            Poeta, romanziere, drammaturgo, ma anche dandy, soldato, comunicatore. D'Annunzio trasforma l'esistenza
+            in opera d'arte, fra lusso sensoriale, culto dell'io e abissi di modernità inquieta.
+          </p>
+
+          <div class="hero-pills">
+            <span class="pill">Estetismo &amp; superomismo</span>
+            <span class="pill">Decadentismo europeo</span>
+            <span class="pill">Politica, guerra, mito personale</span>
+          </div>
+
+          <div class="hero-cta-row">
+            <a href="#vita" class="btn-main">
+              <span class="btn-main-icon">⟱</span>
+              <span>Inizia dal profilo essenziale</span>
+            </a>
+            <a href="#temi" class="btn-ghost">Esplora i temi chiave</a>
+          </div>
+          <p class="hero-note">Suggerimento didattico: usa questa pagina come "portale" introduttivo prima di
+            affrontare i testi in classe.</p>
+        </div>
+
+        <div class="hero-portrait-wrapper">
+          <div class="hero-portrait-card">
+            <div class="hero-portrait-glow"></div>
+            <div class="hero-portrait-silhouette"></div>
+            <div class="hero-portrait-base"></div>
+
+            <div class="hero-portrait-label">
+              <strong>D'Annunzio</strong>
+              <span>Poeta, "vate", regista di sé stesso (1863–1938)</span>
+            </div>
+
+            <div class="hero-quote-chip">
+              <em>«Io ho quel che ho donato.»</em>
+            </div>
+
+            <div class="floating-pill">Estetica del vivere</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="main-inner">
+        <nav class="section-nav">
+          <ul class="nav-list">
+            <li><button class="nav-chip active" data-target="vita"><span class="nav-chip-dot"></span> Vita &amp; contesto</button></li>
+            <li><button class="nav-chip" data-target="poetica">Poetica &amp; stile</button></li>
+            <li><button class="nav-chip" data-target="temi">Temi fondamentali</button></li>
+            <li><button class="nav-chip" data-target="opere">Opere da conoscere</button></li>
+            <li><button class="nav-chip" data-target="focus">Per la classe</button></li>
+          </ul>
+        </nav>
+
+        <section id="vita" data-section="vita">
+          <div class="section-grid">
+            <div>
+              <h2 class="section-title">Vita &amp; scenario storico</h2>
+              <p class="section-tagline">Dalla provincia abruzzese alla ribalta internazionale: una biografia che è già
+                romanzo.</p>
+
+              <div class="card">
+                <p><strong>Gabriele D'Annunzio</strong> nasce a Pescara nel 1863. Si forma fra il collegio Cicognini
+                  e l'ambiente mondano romano, dove si impone come giovane poeta brillante e provocatorio.</p>
+                <p>La sua vita attraversa il cuore del <strong>Primo Novecento</strong>: l'età dell'imperialismo,
+                  della Grande Guerra, dei nazionalismi. D'Annunzio non osserva la storia: ci entra dentro, spesso da
+                  protagonista.</p>
+                <p>Fra amori celebri (Eleonora Duse), scandali, fughe all'estero e rientri clamorosi, trasforma la
+                  propria immagine pubblica in un'opera continua di <strong>autoscrittura</strong>: ogni gesto è scena,
+                  ogni luogo diventa palcoscenico (fino al Vittoriale).</p>
+
+                <div class="pill-row">
+                  <span class="pill-outline">Pescara</span>
+                  <span class="pill-outline">Roma umbertina</span>
+                  <span class="pill-outline">Parigi</span>
+                  <span class="pill-outline">Fiume</span>
+                  <span class="pill-outline">Vittoriale</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="card-soft">
+                <div class="badge-label">Timeline essenziale</div>
+                <div class="timeline">
+                  <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">1863 · nascita</div>
+                    <div class="timeline-text">Nasce a Pescara. Prime raccolte poetiche giovanili lo impongono come
+                      promessa della poesia italiana.</div>
+                  </div>
+
+                  <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">Anni 1890</div>
+                    <div class="timeline-text">Romanzi scandalosi (<em>Il piacere</em>, <em>Trionfo della morte</em>),
+                      vita mondana, figura di dandy decadente e raffinato.</div>
+                  </div>
+
+                  <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">1900–1915</div>
+                    <div class="timeline-text">Drammaturgo di successo, interventista acceso. Cura il proprio mito di
+                      "vate" della nazione.</div>
+                  </div>
+
+                  <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">1915–1918</div>
+                    <div class="timeline-text">Partecipa alla Grande Guerra (beffa di Buccari, volo su Vienna). La
+                      guerra diventa teatro eroico.</div>
+                  </div>
+
+                  <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">1919–1920</div>
+                    <div class="timeline-text">Impresa di Fiume: occupazione della città, esperimento politico e
+                      teatrale fra rivoluzione e spettacolo.</div>
+                  </div>
+
+                  <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-year">Anni finali</div>
+                    <div class="timeline-text">Si ritira al Vittoriale (Gardone Riviera), trasformando la propria
+                      casa in un monumento alla propria leggenda. Muore nel 1938.</div>
+                  </div>
+                </div>
+
+                <p class="note-small">Domanda guida per la classe: quanto c'è di costruito e quanto di autentico nel
+                  mito dannunziano?</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="poetica" data-section="poetica">
+          <div class="section-grid">
+            <div>
+              <h2 class="section-title">Poetica &amp; stile</h2>
+              <p class="section-tagline">La parola diventa materia da scolpire, la frase si fa musica, il testo è un
+                dispositivo di seduzione.</p>
+
+              <div class="card">
+                <p><strong>Estetismo</strong>: l'arte è valore assoluto. La vita deve piegarsi alla forma, al bello, al
+                  raro. Il poeta si pone al di sopra della massa borghese, in un isolamento aristocratico.</p>
+                <p><strong>Superomismo</strong>: ispirato (ma semplificato) da Nietzsche, D'Annunzio costruisce la figura
+                  del "superuomo": individuo eccezionale, pronto a sacrificare gli altri al proprio progetto di grandezza.
+                </p>
+                <p><strong>Sinestesia e musicalità</strong>: il linguaggio mescola sensazioni (colori, odori, suoni) per
+                  creare un'esperienza sensoriale totale. Ogni verso è movimento, luce, eco.</p>
+                <p><strong>Sperimentazione metrica</strong>: recupera forme classiche, ma le rielabora in chiave
+                  modernissima, con enjambement, accumuli, improvvisi squarci visionari.</p>
+              </div>
+            </div>
+
+            <div>
+              <div class="card-soft">
+                <div class="badge-label">Lessico chiave</div>
+                <div class="themes-grid">
+                  <div class="theme-card">
+                    <div class="theme-title">Lusso lessicale</div>
+                    <div class="theme-tag">Parole rare, termini preziosi, latinismi</div>
+                    <p>La lingua dannunziana è volutamente ricca, ricercata, a volte eccessiva. Il lessico diventa
+                      strumento di distinzione e potere.</p>
+                  </div>
+                  <div class="theme-card">
+                    <div class="theme-title">Sinestesia</div>
+                    <div class="theme-tag">I sensi si mischiano</div>
+                    <p>"Profumi sonori", "colori che cantano": le sensazioni passano da un canale all'altro, creando
+                      un effetto di immersione totale.</p>
+                  </div>
+                  <div class="theme-card">
+                    <div class="theme-title">Simboli ricorrenti</div>
+                    <div class="theme-tag">Mare, vento, luce, notte</div>
+                    <p>Il paesaggio (marino, montano, notturno) riflette gli stati d'animo e amplifica l'eroismo o
+                      l'angoscia dei protagonisti.</p>
+                  </div>
+                  <div class="theme-card">
+                    <div class="theme-title">Teatralità</div>
+                    <div class="theme-tag">Ogni scena è un quadro</div>
+                    <p>Dialoghi scolpiti, gesti solenni, ingressi spettacolari: la scrittura di D'Annunzio chiede quasi
+                      naturalmente di essere messa in scena.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="temi" data-section="temi">
+          <h2 class="section-title">Temi fondamentali</h2>
+          <p class="section-tagline">Dietro l'oro delle parole, una modernità inquieta: crisi dell'io, massa anonima,
+            violenza del desiderio.</p>
+
+          <div class="card">
+            <div class="themes-grid">
+              <div class="theme-card">
+                <div class="theme-title">Io come opera d'arte</div>
+                <div class="theme-tag">Il piacere di esistere in scena</div>
+                <p>Il protagonista dannunziano progetta sé stesso come un'opera. Ogni gesto deve essere "all'altezza" del
+                  personaggio che ha deciso di impersonare.</p>
+              </div>
+              <div class="theme-card">
+                <div class="theme-title">Desiderio senza misura</div>
+                <div class="theme-tag">Eros, potere, distruzione</div>
+                <p>Amore e possesso, seduzione e dominio: il desiderio non conosce limite e spesso porta alla rovina sé e
+                  gli altri.</p>
+              </div>
+              <div class="theme-card">
+                <div class="theme-title">Massa &amp; folla</div>
+                <div class="theme-tag">Il disprezzo per l'anonimo</div>
+                <p>Accanto alla celebrazione dell'eroe, compare spesso lo sguardo sprezzante sulla folla, vista come
+                  informe, passiva, manipolabile.</p>
+              </div>
+              <div class="theme-card">
+                <div class="theme-title">Natura potenziata</div>
+                <div class="theme-tag">Paesaggio come amplificatore</div>
+                <p>Il mare in tempesta, la notte stellata, il vento impetuoso: la natura non è sfondo, ma cassa di risonanza
+                  delle passioni e delle visioni.</p>
+              </div>
+            </div>
+
+            <p class="note-small">Spunto di discussione: quanto questa esaltazione dell'eroe e del gesto estremo ha
+              preparato il terreno alle ideologie del Novecento?</p>
+          </div>
+        </section>
+
+        <section id="opere" data-section="opere">
+          <div class="section-grid">
+            <div>
+              <h2 class="section-title">Opere da conoscere</h2>
+              <p class="section-tagline">Un possibile percorso minimo per una quinta: romanzo, poesia, teatro, mito
+                politico.</p>
+
+              <div class="card">
+                <p>Per un quadro essenziale di D'Annunzio a scuola si possono selezionare:</p>
+                <ul class="focus-list">
+                  <li>
+                    <span class="focus-bullet"></span>
+                    <span><strong><em>Il piacere</em> (1889)</strong> – romanzo dell'esteta: l'io che vuole vivere solo di
+                      bellezza e sensazioni.</span>
+                  </li>
+                  <li>
+                    <span class="focus-bullet"></span>
+                    <span><strong><em>Alcyone</em> (1903)</strong> – raccolta poetica simbolo dell'estate
+                      dannunziana: mare, luce, fusione con la natura.</span>
+                  </li>
+                  <li>
+                    <span class="focus-bullet"></span>
+                    <span><strong><em>La pioggia nel pineto</em></strong> – testo perfetto per lavorare su sinestesie e
+                      musicalità.</span>
+                  </li>
+                  <li>
+                    <span class="focus-bullet"></span>
+                    <span><strong><em>La figlia di Iorio</em> (1904)</strong> – dramma che porta in scena la cultura
+                      abruzzese in chiave tragica.</span>
+                  </li>
+                  <li>
+                    <span class="focus-bullet"></span>
+                    <span><strong>Discorsi interventisti</strong> – per collegare D'Annunzio al clima politico della
+                      Grande Guerra.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div>
+              <div class="card-soft">
+                <div class="badge-label">Mappa veloce</div>
+                <div class="works-grid">
+                  <div class="work-card">
+                    <div class="work-year">Romanzo · 1889</div>
+                    <div class="work-title">Il piacere</div>
+                    <div class="work-tagline">L'esteta Andrea Sperelli, Roma, salotti, arte e fallimenti.</div>
+                    <div class="work-label">Focus</div>
+                    <p class="work-tagline">Crisi morale dietro il lusso estetico.</p>
+                  </div>
+                  <div class="work-card">
+                    <div class="work-year">Poesia · 1903</div>
+                    <div class="work-title">Alcyone</div>
+                    <div class="work-tagline">Estate assoluta, fusione con il paesaggio, mare-mito.</div>
+                    <div class="work-label">Testo chiave</div>
+                    <p class="work-tagline"><em>La pioggia nel pineto</em>, <em>Meriggio</em>…</p>
+                  </div>
+                  <div class="work-card">
+                    <div class="work-year">Teatro · 1904</div>
+                    <div class="work-title">La figlia di Iorio</div>
+                    <div class="work-tagline">Tragedia di passione e pregiudizio in Abruzzo.</div>
+                    <div class="work-label">Per il palco</div>
+                    <p class="work-tagline">Ottimo ponte con il folklore e la cultura locale.</p>
+                  </div>
+                  <div class="work-card">
+                    <div class="work-year">Politica · 1915–1918</div>
+                    <div class="work-title">Discorsi di guerra</div>
+                    <div class="work-tagline">La retorica che trasforma la guerra in rito eroico.</div>
+                    <div class="work-label">Collegamento storico</div>
+                    <p class="work-tagline">Analizzare toni, metafore, immagini.</p>
+                  </div>
+                  <div class="work-card">
+                    <div class="work-year">Impresa · 1919–1920</div>
+                    <div class="work-title">Fiume</div>
+                    <div class="work-tagline">La città laboratorio: politica, spettacolo, utopia.</div>
+                    <div class="work-label">Caso di studio</div>
+                    <p class="work-tagline">Perfetto per intrecciare storia e letteratura.</p>
+                  </div>
+                  <div class="work-card">
+                    <div class="work-year">Spazio · anni '20–'30</div>
+                    <div class="work-title">Il Vittoriale</div>
+                    <div class="work-tagline">La casa-museo come auto-monumento.</div>
+                    <div class="work-label">Luogo</div>
+                    <p class="work-tagline">Si può usare come "testo" architettonico.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="focus" data-section="focus">
+          <div class="section-grid">
+            <div>
+              <h2 class="section-title">Per la classe: spunti di lavoro</h2>
+              <p class="section-tagline">Non solo riassunto: attività per far emergere il conflitto fra bellezza,
+                potere e responsabilità.</p>
+
+              <div class="focus-grid">
+                <div class="focus-card">
+                  <div class="focus-title">1 · Atlante delle sinestesie</div>
+                  <ul class="focus-list">
+                    <li><span class="focus-bullet"></span><span>Seleziona un testo (es. <em>La pioggia nel pineto</em>) e
+                          chiedi alla classe di evidenziare tutte le sinestesie.</span></li>
+                    <li><span class="focus-bullet"></span><span>Trasforma le sinestesie in "schede" con colore, suono,
+                          tatto, odore corrispondenti.</span></li>
+                    <li><span class="focus-bullet"></span><span>Obiettivo: capire come la poesia agisce sui sensi, non
+                          solo sulle idee.</span></li>
+                  </ul>
+                </div>
+
+                <div class="focus-card">
+                  <div class="focus-title">2 · Processo al superuomo</div>
+                  <ul class="focus-list">
+                    <li><span class="focus-bullet"></span><span>Dividi la classe in "difesa" e "accusa" del superuomo
+                          dannunziano.</span></li>
+                    <li><span class="focus-bullet"></span><span>Usa passi da <em>Il piacere</em> o da discorsi interventisti
+                          come "prove".</span></li>
+                    <li><span class="focus-bullet"></span><span>Obiettivo: collegare il mito dell'eroe alle derive
+                          politiche del Novecento.</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="quote-block">
+                <div class="quote-symbol">“</div>
+                <blockquote>
+                  Io ho quel che ho donato.
+                </blockquote>
+                <div class="quote-author">Gabriele D'Annunzio</div>
+                <div class="quote-context">Motto inciso al Vittoriale</div>
+                <p class="note-small">Spunto critico: questo motto illumina davvero la sua vita o è l'ennesimo pezzo di
+                  scenografia? Quanto D'Annunzio restituisce alla comunità e quanto trattiene per il proprio mito?</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div>
+          Pagina introduttiva su Gabriele D'Annunzio · pensata per studenti di scuola secondaria di secondo grado.
+          <div class="note-small">Adatta come landing page per percorsi più ampi (moduli, webapp, unità immersive).</div>
+        </div>
+        <div class="footer-links">
+          <div class="footer-pill">Vita &amp; opere</div>
+          <div class="footer-pill">Estetismo · superomismo</div>
+          <div class="footer-pill">Didattica laboratoriale</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Navigazione dolce e evidenziazione sezione attiva
+    const navChips = document.querySelectorAll('.nav-chip');
+
+    navChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const targetId = chip.getAttribute('data-target');
+        const targetSection = document.querySelector(`[data-section="${targetId}"]`);
+
+        if (targetSection) {
+          window.scrollTo({
+            top: targetSection.getBoundingClientRect().top + window.scrollY - 90,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    const sections = document.querySelectorAll('section[data-section]');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.getAttribute('data-section');
+          navChips.forEach(chip => {
+            chip.classList.toggle('active', chip.getAttribute('data-target') === sectionId);
+          });
+        }
+      });
+    }, {
+      root: null,
+      threshold: 0.4
+    });
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
