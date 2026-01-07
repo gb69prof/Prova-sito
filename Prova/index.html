@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Foggia – Guida turistico‑culturale</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top-nav">
+    <div class="logo-text">Foggia</div>
+    <nav>
+      <a href="#scopri-foggia">Scopri Foggia</a>
+      <a href="#cosa-vedere">Cosa vedere</a>
+      <a href="#eventi-attivita">Eventi</a>
+      <a href="#sapori-locali">Gastronomia</a>
+      <a href="#info-itinerari">Info & Itinerari</a>
+      <a href="#mappa">Mappa</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME CON IMMAGINE -->
+    <section id="home" class="hero">
+      <figure class="hero-figure">
+        <!-- immagine completa -->
+        <img
+          src="img/home-foggia.png"
+          alt="Homepage illustrata della guida di Foggia con Cattedrale, arco monumentale, icone e mappa."
+          usemap="#mappa-home"
+          id="hero-image"
+        >
+        <!-- image map con aree cliccabili -->
+        <map name="mappa-home" id="mappa-home">
+          <!-- Hero / titolo 'Benvenuti a Foggia' porta alla sezione Scopri Foggia -->
+          <area shape="rect"
+                coords="0,0,1152,330"
+                href="#scopri-foggia"
+                alt="Scopri Foggia">
+
+          <!-- Card Cosa vedere -->
+          <area shape="rect"
+                coords="40,360,280,470"
+                href="#cosa-vedere"
+                alt="Cosa vedere">
+
+          <!-- Card Eventi & Attività -->
+          <area shape="rect"
+                coords="300,360,560,470"
+                href="#eventi-attivita"
+                alt="Eventi e attività">
+
+          <!-- Card Sapori Locali -->
+          <area shape="rect"
+                coords="580,360,840,470"
+                href="#sapori-locali"
+                alt="Sapori locali">
+
+          <!-- Card Info & Itinerari -->
+          <area shape="rect"
+                coords="860,360,1110,470"
+                href="#info-itinerari"
+                alt="Info e itinerari">
+
+          <!-- Area mappa in basso -->
+          <area shape="rect"
+                coords="120,520,1030,730"
+                href="#mappa"
+                alt="Esplora la mappa di Foggia">
+        </map>
+      </figure>
+    </section>
+
+    <!-- SEZIONI DI CONTENUTO -->
+    <section id="scopri-foggia" class="content-section">
+      <h2>Scopri Foggia</h2>
+      <p>
+        Questa web app è pensata come guida semplice e intuitiva per studenti, turisti e cittadini.
+        Dalla Cattedrale al Parco della Villa, dai vicoli storici ai nuovi spazi urbani,
+        ogni sezione ti porta in un punto diverso della città.
+      </p>
+    </section>
+
+    <section id="cosa-vedere" class="content-section">
+      <h2>Cosa vedere</h2>
+      <ul>
+        <li>Cattedrale di Santa Maria Icona Vetere</li>
+        <li>Arco di Federico II e Parco della Rimembranza</li>
+        <li>Piazza Cavour e la Fontana del Sele</li>
+        <li>Chiese storiche e palazzi del centro</li>
+      </ul>
+      <p>
+        Ogni luogo potrà essere collegato a schede, immagini a 360°, audio‑guide e
+        percorsi per le scuole.
+      </p>
+    </section>
+
+    <section id="eventi-attivita" class="content-section">
+      <h2>Eventi &amp; Attività</h2>
+      <p>
+        Qui potrai inserire il calendario degli eventi, visite guidate,
+        rassegne teatrali, concerti in piazza, iniziative delle scuole e delle associazioni.
+      </p>
+      <p class="placeholder">
+        &larr; Questa sezione è solo un modello: puoi collegarla a un file JSON, a un foglio Google o ad
+        aggiornamenti manuali.
+      </p>
+    </section>
+
+    <section id="sapori-locali" class="content-section">
+      <h2>Sapori locali</h2>
+      <p>
+        Una panoramica dei piatti tipici foggiani e del Tavoliere:
+        dalle paste fresche al pancotto, dalla pizza a forno a legna ai dolci della tradizione.
+      </p>
+      <p>
+        Ogni voce può rimandare a schede con curiosità storiche, ricette,
+        video o racconti dei ristoratori.
+      </p>
+    </section>
+
+    <section id="info-itinerari" class="content-section">
+      <h2>Info &amp; Itinerari</h2>
+      <p>
+        In questa sezione trovi itinerari tematici (storico, artistico, naturalistico),
+        informazioni pratiche su trasporti, orari, contatti utili e link a mappe esterne.
+      </p>
+      <p>
+        L’idea è che l’immagine iniziale sia la porta d’accesso: clicchi sulla parte
+        che ti interessa e arrivi direttamente qui sotto.
+      </p>
+    </section>
+
+    <section id="mappa" class="content-section">
+      <h2>Mappa interattiva</h2>
+      <p>
+        Qui puoi integrare una mappa di Foggia (ad esempio con OpenStreetMap o Google Maps)
+        e sovrapporre i punti di interesse. Per ora trovi solo un segnaposto.
+      </p>
+      <div class="map-placeholder">
+        <span>Mappa di Foggia (da integrare)</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <p>Prototipo di guida turistico‑culturale di Foggia – realizzata con HTML, CSS e JavaScript.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
