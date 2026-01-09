@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Itinerari – Foggia</title>
+  <link rel="icon" href="../assets/favicon.png" />
+  <link rel="stylesheet" href="../assets/styles.css" />
+  <style>
+    .navTop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+    .navTop .back{margin-top:0}
+
+    .heroCard{
+      margin-bottom:14px;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+      position:relative;
+    }
+    .heroCard img{width:100%;height:auto;display:block}
+    .heroCard::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background: linear-gradient(180deg, rgba(11,18,32,.10) 0%, rgba(11,18,32,.52) 78%, rgba(11,18,32,.72) 100%);
+    }
+    .heroText{
+      position:absolute;
+      left:16px; right:16px; bottom:14px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+      z-index:2;
+    }
+    .heroText h1{
+      margin:0;
+      font-size:28px;
+      letter-spacing:.2px;
+      line-height:1.05;
+      text-shadow: 0 10px 25px rgba(0,0,0,.35);
+    }
+    .heroText p{
+      margin:6px 0 0;
+      max-width:62ch;
+      color: rgba(234,240,255,.86);
+      font-size:14px;
+      line-height:1.45;
+      text-shadow: 0 10px 25px rgba(0,0,0,.25);
+    }
+    .heroBadge{
+      flex:0 0 auto;
+      font-size:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+      opacity:.95;
+      white-space:nowrap;
+    }
+
+    .subTitle{
+      margin-top:16px;
+      font-size:13px;
+      color: rgba(234,240,255,.74);
+      line-height:1.55;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      background: rgba(255,255,255,.04);
+      padding:12px 14px;
+    }
+
+    .grid2{display:grid;grid-template-columns:repeat(2, 1fr);gap:14px;margin-top:14px}
+
+    .routeCard{
+      position:relative;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      box-shadow: var(--shadow-soft);
+      transform: translateY(0);
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 170px;
+    }
+    .routeCard:hover{transform:translateY(-3px); box-shadow: 0 22px 55px rgba(0,0,0,.45); filter:saturate(1.05)}
+    .routeCard:active{transform:translateY(1px) scale(.988); box-shadow: 0 10px 22px rgba(0,0,0,.35)}
+    .routeCard:focus-visible{outline:3px solid rgba(106,146,255,.65); outline-offset:3px}
+
+    .routeBg{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 260px at 20% 0%, rgba(255,255,255,.18), transparent 55%),
+        radial-gradient(700px 240px at 90% 10%, rgba(255,255,255,.10), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+      opacity:.95;
+    }
+    .routeIcon{
+      width:44px; height:44px;
+      border-radius:14px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.07);
+      box-shadow: 0 12px 24px rgba(0,0,0,.25);
+      font-size:22px;
+    }
+    .routeInner{position:relative;padding:16px;display:flex;gap:12px;align-items:flex-start}
+    .routeInner h2{margin:0;font-size:18px;letter-spacing:.2px}
+    .routeInner p{margin:6px 0 0;color: rgba(234,240,255,.78);font-size:13px;line-height:1.45}
+    .routeMeta{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .chip{font-size:12px;padding:6px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background: rgba(255,255,255,.06);opacity:.95}
+
+    @media (max-width:900px){
+      .grid2{grid-template-columns:1fr}
+      .heroText h1{font-size:24px}
+      .heroBadge{display:none}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrapper">
+    <div class="navTop">
+      <div class="brand">Foggia • Guida</div>
+      <a class="back" href="../index.html" aria-label="Torna alla home">← Home</a>
+    </div>
+
+    <section class="heroCard" aria-label="Itinerari">
+      <img src="../assets/itinerari.webp" alt="Itinerari – collage di Foggia" />
+      <div class="heroText">
+        <div>
+          <h1>Itinerari</h1>
+          <p>Quattro modi per entrare nella città: cultura, svago, food e utility. Scegli una categoria e parti.</p>
+        </div>
+        <div class="heroBadge">Seleziona una categoria</div>
+      </div>
+    </section>
+
+    <div class="subTitle">
+      Struttura link: <b>/cultura/cultura.html</b>, <b>/svago/svago.html</b>, <b>/food/food.html</b>, <b>/utility/utility.html</b>.
+    </div>
+
+    <section class="grid2" aria-label="Categorie itinerari">
+      <a class="routeCard" href="../cultura/cultura.html" aria-label="Apri itinerari Cultura">
+        <div class="routeBg"></div>
+        <div class="routeInner">
+          <div class="routeIcon">🏛️</div>
+          <div>
+            <h2>Cultura</h2>
+            <p>Monumenti, musei, architetture e storie: un percorso “lento” ma pieno.</p>
+            <div class="routeMeta">
+              <span class="chip">Centro</span><span class="chip">Arte</span><span class="chip">Storia</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <a class="routeCard" href="../svago/svago.html" aria-label="Apri itinerari Svago">
+        <div class="routeBg"></div>
+        <div class="routeInner">
+          <div class="routeIcon">🎉</div>
+          <div>
+            <h2>Svago</h2>
+            <p>Eventi, serate, passeggiate e punti “vivi” per respirare la città.</p>
+            <div class="routeMeta">
+              <span class="chip">Eventi</span><span class="chip">Passeggio</span><span class="chip">Night</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <a class="routeCard" href="../food/food.html" aria-label="Apri itinerari Food">
+        <div class="routeBg"></div>
+        <div class="routeInner">
+          <div class="routeIcon">🍝</div>
+          <div>
+            <h2>Food</h2>
+            <p>Sapori locali, tappe consigliate e itinerari “a morsi”.</p>
+            <div class="routeMeta">
+              <span class="chip">Tipico</span><span class="chip">Street</span><span class="chip">Dolci</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <a class="routeCard" href="../utility/utility.html" aria-label="Apri itinerari Utility">
+        <div class="routeBg"></div>
+        <div class="routeInner">
+          <div class="routeIcon">🧭</div>
+          <div>
+            <h2>Utility</h2>
+            <p>Servizi utili: trasporti, parcheggi, info, emergenze, punti pratici.</p>
+            <div class="routeMeta">
+              <span class="chip">Trasporti</span><span class="chip">Parcheggi</span><span class="chip">Info</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <div class="footerNote">Pagine interne: segnaposto pronte da riempire.</div>
+  </main>
+</body>
+</html>
