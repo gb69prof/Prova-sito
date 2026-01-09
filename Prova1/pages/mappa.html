@@ -3,23 +3,210 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Apri la mappa – Foggia</title>
-  <link rel="icon" href="../assets/favicon.png" />
-  <link rel="stylesheet" href="../assets/styles.css" />
-</head>
-<body>
-  <main class="wrapper">
-    <header class="pageHeader">
-      <div class="brand">Foggia • Guida</div>
-      <div class="pill">Pagina fittizia</div>
-    </header>
+  <title>Mappa di Foggia</title>
 
-    <section class="contentCard">
-      <h1 class="h1">Apri la mappa</h1>
-      <p class="p">Mappa interattiva con punti di interesse e navigazione.</p>
-      <p class="p">Qui inseriremo: testi, galleria, percorsi, mappe, link, ecc.</p>
-      <a class="back" href="../index.html" aria-label="Torna alla home">← Torna alla home</a>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.12);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.74);
+      --shadow:0 18px 40px rgba(0,0,0,.35);
+      --shadow-soft:0 10px 25px rgba(0,0,0,.25);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(106,146,255,.18), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(255,106,169,.14), transparent 55%),
+        var(--bg);
+      min-height:100vh;
+    }
+
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:18px 14px 34px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:baseline;
+      gap:10px;
+    }
+
+    .brand h1{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.2px;
+      font-weight:700;
+    }
+    .brand span{
+      font-size:12px;
+      color:var(--muted);
+      border:1px solid var(--stroke);
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+    }
+
+    .panel{
+      border:1px solid var(--stroke);
+      background:var(--card);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .hero{
+      padding:16px 16px 0;
+    }
+
+    .heroTitle{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 4px 14px;
+    }
+
+    .heroTitle .txt h2{
+      margin:0 0 6px;
+      font-size:26px;
+      line-height:1.12;
+    }
+    .heroTitle .txt p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.45;
+      font-size:14px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      box-shadow:var(--shadow-soft);
+      transition:transform .18s ease, filter .18s ease;
+      user-select:none;
+      -webkit-tap-highlight-color:transparent;
+      font-size:14px;
+      font-weight:600;
+      color:var(--text);
+      cursor:pointer;
+    }
+
+    .btn:hover{ transform:translateY(-2px); filter:saturate(1.05); }
+    .btn:active{ transform:translateY(1px) scale(.985); }
+
+    .mapShell{
+      position:relative;
+      margin: 0;
+      border-top:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.15);
+    }
+
+    /* Responsive map height */
+    .mapShell iframe{
+      width:100%;
+      height:520px;
+      border:0;
+      display:block;
+    }
+
+    .footer{
+      padding:14px 16px 16px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+
+    @media (max-width: 780px){
+      .heroTitle .txt h2{ font-size:22px; }
+      .mapShell iframe{ height: 62vh; min-height: 420px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <h1>Foggia • Mappa</h1>
+        <span>Google Maps</span>
+      </div>
+      <a class="btn" href="index.html" title="Torna alla home">← Home</a>
+    </div>
+
+    <section class="panel">
+      <div class="hero">
+        <div class="heroTitle">
+          <div class="txt">
+            <h2>Apri la mappa di Foggia</h2>
+            <p>Esplora la città, cerca i luoghi e avvia la navigazione con un tap.</p>
+          </div>
+
+          <div class="actions">
+            <!-- apre Google Maps su Foggia -->
+            <a class="btn"
+               href="https://www.google.com/maps?q=Foggia&hl=it"
+               target="_blank" rel="noopener">
+              Apri in Google Maps ↗
+            </a>
+
+            <!-- avvia direttamente la navigazione verso Foggia -->
+            <a class="btn"
+               href="https://www.google.com/maps/dir/?api=1&destination=Foggia%2C%20Italy"
+               target="_blank" rel="noopener">
+              Naviga verso Foggia 🚗
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mapShell" aria-label="Mappa incorporata di Foggia">
+        <!-- EMBED: centra e zooma su Foggia -->
+        <iframe
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+          src="https://www.google.com/maps?q=Foggia%2C%20Italy&z=13&output=embed">
+        </iframe>
+      </div>
+
+      <div class="footer">
+        Suggerimento: se vuoi anche “punti di interesse” (cattedrale, musei, piazze),
+        posso aggiungere pulsanti/filtri che aprono ricerche mirate su Google Maps
+        (es. “musei a Foggia”, “ristoranti tipici”, “parchi”, ecc.).
+      </div>
     </section>
-  </main>
+  </div>
 </body>
 </html>
