@@ -1,155 +1,126 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Foggia in 10 tappe</title>
-  <meta name="description" content="Benvenuti a Foggia: scopri, vivi, ama la città." />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foggia in 10 tappe</title>
 
-  <style>
-    :root{
-      --bg:#070B12;
-      --txt:#EAF0FF;
-      --muted:rgba(234,240,255,.72);
-      --stroke:rgba(255,255,255,.12);
-      --shadow:0 18px 55px rgba(0,0,0,.45);
-      --r:18px;
-      --r2:22px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-      background:
-        radial-gradient(1100px 600px at 50% -10%, rgba(88,120,255,.18), transparent 60%),
-        radial-gradient(900px 520px at 100% 10%, rgba(255,122,66,.14), transparent 55%),
-        var(--bg);
-      color:var(--txt);
-    }
-    .wrap{
-      width:min(1120px, calc(100% - 32px));
-      margin:0 auto;
-    }
+<style>
+:root{
+  --bg:#070B12;
+  --panel:#0c1220;
+  --stroke:rgba(255,255,255,.12);
+  --shadow:0 18px 45px rgba(0,0,0,.45);
+  --r:18px;
+}
 
-    /* HERO */
-    .hero{padding:18px 0 10px}
-    .heroCard{
-      border-radius:var(--r2);
-      overflow:hidden;
-      border:1px solid var(--stroke);
-      box-shadow:var(--shadow);
-      background:rgba(255,255,255,.02);
-      position:relative;
-    }
-    .heroCard img{
-      width:100%;
-      height:min(62vh, 560px);
-      display:block;
-      object-fit:cover;
-      object-position:center;
-      transform:scale(1.01);
-      filter:saturate(1.02) contrast(1.02);
-    }
-    .heroCard::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(1000px 520px at 50% 0%, rgba(0,0,0,.18), transparent 60%),
-        linear-gradient(to bottom, rgba(0,0,0,.08), rgba(0,0,0,.32));
-      pointer-events:none;
-    }
+*{box-sizing:border-box}
 
-    /* PERCORSI */
-    .paths{padding:12px 0 34px}
-    .head{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:18px;
-      margin:10px 0 12px;
-    }
-    .head h2{margin:0;font-size:22px;letter-spacing:.2px}
-    .head p{margin:0;max-width:62ch;color:var(--muted);font-weight:650;line-height:1.35}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background:var(--bg);
+  color:#fff;
+}
 
-    .row{
-      display:flex;
-      gap:14px;
-      align-items:stretch;
-    }
-    .card{
-      flex:1 1 33.333%;
-      border-radius:var(--r);
-      overflow:hidden;
-      border:1px solid var(--stroke);
-      box-shadow:0 18px 45px rgba(0,0,0,.35);
-      background:rgba(255,255,255,.02);
-      transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-    }
-    .card:hover{
-      transform:translateY(-2px);
-      border-color:rgba(255,255,255,.22);
-      box-shadow:0 26px 70px rgba(0,0,0,.45);
-    }
-    .card:active{transform:translateY(-1px) scale(.995)}
-    .card img{
-      width:100%;
-      height:140px;          /* striscia bassa */
-      display:block;
-      object-fit:cover;
-      object-position:center;
-    }
+/* layout */
+.wrap{
+  width:min(1120px, calc(100% - 32px));
+  margin:0 auto;
+}
 
-    @media (max-width: 900px){
-      .row{flex-direction:column}
-      .card img{height:128px}
-      .heroCard img{height:min(55vh, 520px)}
-      .head{flex-direction:column;align-items:flex-start}
-    }
+/* HERO */
+.hero{
+  padding:20px 0 10px;
+}
+.hero img{
+  width:100%;
+  height:min(62vh,560px);
+  object-fit:cover;
+  display:block;
+  border-radius:22px;
+  box-shadow:var(--shadow);
+}
 
-    @media (prefers-reduced-motion: reduce){
-      .card{transition:none}
-      .card:hover{transform:none}
-    }
-  </style>
+/* PERCORSI */
+.paths{
+  padding:20px 0 40px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+/* CARD */
+.card{
+  background:var(--panel);
+  border-radius:var(--r);
+  border:1px solid var(--stroke);
+  box-shadow:var(--shadow);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:150px;               /* altezza UNICA */
+  padding:14px;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 26px 70px rgba(0,0,0,.55);
+}
+
+/* IMMAGINI */
+.card img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;         /* QUI è la chiave */
+  display:block;
+}
+
+/* mobile */
+@media (max-width:900px){
+  .row{
+    grid-template-columns:1fr;
+  }
+  .card{
+    height:140px;
+  }
+}
+</style>
 </head>
 
 <body>
-  <main>
-    <!-- COPERTINA -->
-    <section class="hero">
-      <div class="wrap">
-        <div class="heroCard">
-          <img src="assets/IMG_3963.png" alt="Benvenuti a Foggia" />
-        </div>
-      </div>
-    </section>
 
-    <!-- PERCORSI -->
-    <section class="paths" id="percorsi">
-      <div class="wrap">
-        <div class="head">
-          <div>
-            <h2>Tre percorsi</h2>
-            <p><b>Scopri</b> (racconto), <b>Vivi</b> (oggi), <b>Ama</b> (luoghi del cuore).</p>
-          </div>
-        </div>
+<main class="wrap">
 
-        <div class="row" role="list">
-          <a class="card" role="listitem" href="scopri/index.html" aria-label="Scopri">
-            <img src="assets/scopri.png" alt="Scopri" />
-          </a>
+  <!-- COPERTINA -->
+  <section class="hero">
+    <img src="assets/IMG_3963.png" alt="Benvenuti a Foggia">
+  </section>
 
-          <a class="card" role="listitem" href="vivi/index.html" aria-label="Vivi">
-            <img src="assets/vivi.png" alt="Vivi" />
-          </a>
+  <!-- PERCORSI -->
+  <section class="paths">
+    <div class="row">
 
-          <a class="card" role="listitem" href="ama/index.html" aria-label="Ama">
-            <img src="assets/ama.png" alt="Ama" />
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
+      <a class="card" href="scopri/index.html">
+        <img src="assets/scopri.png" alt="Scopri">
+      </a>
+
+      <a class="card" href="vivi/index.html">
+        <img src="assets/vivi.png" alt="Vivi">
+      </a>
+
+      <a class="card" href="ama/index.html">
+        <img src="assets/ama.png" alt="Ama">
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
 </body>
 </html>
