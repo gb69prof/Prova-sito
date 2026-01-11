@@ -1,0 +1,158 @@
+[
+  {
+    "id": "iconavetere-marzo",
+    "title": "Madonna dei Sette Veli – Festa patronale di marzo",
+    "date": "22 marzo (spesso processione tra 20–22)",
+    "category": "Devozione cittadina",
+    "place": "Cattedrale di Foggia / Basilica San Giovanni Battista, Foggia",
+    "summary": "Festa della memoria legata al terremoto del 1731 e al miracolo dell’apparizione del volto nell’ovale del Sacro Tavolo.",
+    "tags": [
+      "processione",
+      "memoria",
+      "terremoto 1731"
+    ]
+  },
+  {
+    "id": "iconavetere-agosto",
+    "title": "Madonna dei Sette Veli – Solennità dell’Assunta",
+    "date": "15 agosto",
+    "category": "Devozione cittadina",
+    "place": "Centro di Foggia (sosta in Piazza Villani), Foggia",
+    "summary": "Processione estiva trionfante con rito centrale della benedizione dei campi in Piazza Villani.",
+    "tags": [
+      "assunta",
+      "benedizione campi",
+      "ferragosto"
+    ]
+  },
+  {
+    "id": "san-ciro",
+    "title": "San Ciro – Il medico divino",
+    "date": "31 gennaio (con triduo/novena)",
+    "category": "Santi e compatroni",
+    "place": "Parrocchia di San Giuseppe, Foggia",
+    "summary": "Benedizione dell’olio di San Ciro e venerazione della reliquia; richiesta di guarigioni fisiche e spirituali.",
+    "tags": [
+      "olio benedetto",
+      "reliquia",
+      "guarigione"
+    ]
+  },
+  {
+    "id": "sant-anna",
+    "title": "Sant’Anna ai Croci",
+    "date": "26 luglio",
+    "category": "Feste di quartiere",
+    "place": "Chiesa di Sant’Anna / Piazza Sant’Eligio (Borgo Croci), Foggia",
+    "summary": "Festa identitaria del rione: batterie pirotecniche, giostre, cibo rituale (ciammaruchelle e pizze fritte).",
+    "tags": [
+      "Borgo Croci",
+      "ciammaruchelle",
+      "batterie"
+    ]
+  },
+  {
+    "id": "sant-antonio-centro",
+    "title": "Sant’Antonio – Polo centro (San Pasquale)",
+    "date": "13 giugno",
+    "category": "Feste di quartiere",
+    "place": "Parrocchia San Pasquale Baylon, Foggia",
+    "summary": "Tradizione del Pane di Sant’Antonio e processione nelle vie storiche del centro.",
+    "tags": [
+      "pane",
+      "processione",
+      "centro"
+    ]
+  },
+  {
+    "id": "sant-antonio-cep",
+    "title": "Sant’Antonio – Polo CEP (Santuario)",
+    "date": "13 giugno",
+    "category": "Feste di quartiere",
+    "place": "Santuario/Parrocchia di Sant’Antonio al CEP, Foggia",
+    "summary": "Fede e spettacolo in periferia: concerti, bancarelle e fuochi, con forte valore di riscatto simbolico del quartiere.",
+    "tags": [
+      "CEP",
+      "musica",
+      "periferia"
+    ]
+  },
+  {
+    "id": "san-paolo-cep",
+    "title": "San Paolo Apostolo al CEP",
+    "date": "29 giugno",
+    "category": "Feste di quartiere",
+    "place": "Parrocchia San Paolo Apostolo (CEP), Foggia",
+    "summary": "Festa giovane: tornei, Grest, stand gastronomici; la festa diventa micro-welfare per sostenere attività e famiglie.",
+    "tags": [
+      "oratorio",
+      "sport",
+      "solidarietà"
+    ]
+  },
+  {
+    "id": "venerdi-santo",
+    "title": "Venerdì Santo – Processione dei Misteri e ‘Incontro’",
+    "date": "Venerdì Santo (data mobile)",
+    "category": "Riti della Passione",
+    "place": "Piazza XX Settembre / Chiesa San Francesco Saverio (delle Colonne), Foggia",
+    "summary": "Il momento apicale è l’Incontro tra Addolorata e Cristo Morto in Piazza XX Settembre, tra marce funebri e silenzio cittadino.",
+    "tags": [
+      "misteri",
+      "incontro",
+      "via crucis"
+    ]
+  },
+  {
+    "id": "incoronata",
+    "title": "Madonna dell’Incoronata – Apparizione e pellegrinaggio",
+    "date": "Ultimo sabato di aprile (con Cavalcata degli Angeli il venerdì)",
+    "category": "Pellegrinaggi",
+    "place": "Santuario Madonna dell’Incoronata, Foggia",
+    "summary": "Cavalcata degli Angeli, unzione con olio, pellegrinaggio; grande mercato agricolo e popolare.",
+    "tags": [
+      "pellegrinaggio",
+      "cavalcata",
+      "tradizione contadina"
+    ]
+  },
+  {
+    "id": "santa-caterina",
+    "title": "Fiera di Santa Caterina",
+    "date": "25 novembre",
+    "category": "Fiere",
+    "place": "Storicamente Via Galliani; oggi spesso area Via Miranda / zona Ipercoop, Foggia",
+    "summary": "Fiera che segna passaggio all’inverno e pre-Natale: presepi, addobbi, giostre e memoria cittadina.",
+    "tags": [
+      "fiera",
+      "natale",
+      "presepi"
+    ]
+  },
+  {
+    "id": "fiera-morti",
+    "title": "Fiera dei Morti e Ognissanti",
+    "date": "1–2 novembre",
+    "category": "Fiere",
+    "place": "Foggia (variabile)",
+    "summary": "Ricorrenza legata al culto dei defunti, oggi più domestica e gastronomica che ‘di piazza’.",
+    "tags": [
+      "defunti",
+      "ognissanti",
+      "tradizione"
+    ]
+  },
+  {
+    "id": "martucci",
+    "title": "Festa del Rione Martucci – Legalità e comunità",
+    "date": "periodo variabile (eventi di rione)",
+    "category": "Feste di quartiere",
+    "place": "Parrocchia Maria Regina della Pace (Rione Martucci), Foggia",
+    "summary": "Festa costruita con scuola e parrocchia: memoria delle vittime di mafia e cittadinanza attiva.",
+    "tags": [
+      "legalità",
+      "scuola",
+      "comunità"
+    ]
+  }
+]
