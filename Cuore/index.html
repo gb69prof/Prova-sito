@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Foggia — Feste cittadine e di quartiere</title>
+  <meta name="description" content="Web app narrativa e interattiva sulle feste a Foggia: eventi, luoghi e geolocalizzazione." />
+  <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="preconnect" href="https://tile.openstreetmap.org" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">FG</div>
+      <div class="brand-text">
+        <div class="title">Foggia — Feste cittadine e di quartiere</div>
+        <div class="subtitle">Una mappa narrativa del ciclo festivo: devozione, quartieri, riti, fiere.</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="#mappa">Mappa</a>
+      <a href="#eventi">Eventi</a>
+      <a href="#testo">Testo</a>
+      <a href="#fonti">Note</a>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <aside class="panel panel-left">
+      <section class="hero">
+        <h1>Una città che si racconta con le sue feste</h1>
+        <p>
+          Qui non trovi un elenco secco: trovi un <strong>palinsesto</strong>.
+          Ogni ricorrenza è un pezzo di memoria pubblica: trauma, grano, periferia, fede, mercato.
+        </p>
+
+        <div class="chips" aria-label="filtri rapidi">
+          <button class="chip active" data-filter="Tutte">Tutte</button>
+          <button class="chip" data-filter="Devozione cittadina">Devozione</button>
+          <button class="chip" data-filter="Feste di quartiere">Quartieri</button>
+          <button class="chip" data-filter="Riti della Passione">Passione</button>
+          <button class="chip" data-filter="Pellegrinaggi">Pellegrinaggi</button>
+          <button class="chip" data-filter="Fiere">Fiere</button>
+        </div>
+
+        <div class="search">
+          <input id="searchInput" type="search" placeholder="Cerca: sant’anna, cep, fiera, incoronata…" autocomplete="off" />
+        </div>
+
+        <div class="hint">
+          <span class="hint-dot"></span>
+          Clicca un evento: si apre la scheda e si accende il marker sulla mappa.
+        </div>
+      </section>
+
+      <section id="eventi" class="list">
+        <div class="list-head">
+          <h2>Eventi & luoghi</h2>
+          <div class="small">Geocoding via OpenStreetMap (Nominatim)</div>
+        </div>
+        <div id="eventsList" class="cards" aria-live="polite"></div>
+      </section>
+    </aside>
+
+    <section class="panel panel-right">
+      <section id="mappa" class="map-wrap">
+        <div class="map-head">
+          <h2>Mappa</h2>
+          <div class="map-actions">
+            <button id="btnFit" class="btn">Inquadra tutto</button>
+            <button id="btnCenter" class="btn ghost">Centro Foggia</button>
+          </div>
+        </div>
+        <div id="map" class="map" role="application" aria-label="Mappa degli eventi"></div>
+        <div class="map-foot">
+          <div class="badge">Suggerimento: se un marker non appare subito, è il geocoding che sta rispondendo lentamente.</div>
+        </div>
+      </section>
+
+      <section id="testo" class="text">
+        <div class="text-head">
+          <h2>Testo originale (navigabile)</h2>
+          <div class="small">Struttura a sezioni, leggibile anche su iPad.</div>
+        </div>
+
+        <div class="accordions">
+          
+    <details class="accordion" open>
+      <summary>
+        <span class="dot"></span>
+        <span class="acc-title">Introduzione: Il Palinsesto Sacro del Tavoliere</span>
+      </summary>
+      <div class="acc-body prose">
+        <p>La città di Foggia, epicentro storico e amministrativo della Capitanata, offre allo studioso di antropologia culturale e storia delle tradizioni popolari un terreno di indagine di straordinaria complessità. Lungi dall&#x27;essere un mero calendario di ricorrenze liturgiche, il ciclo festivo foggiano si configura come un sofisticato sistema di codici simbolici che interseca la memoria traumatica della comunità (i terremoti, i bombardamenti), la struttura economica agraria (la cerealicoltura, la transumanza) e le moderne dinamiche di stratificazione sociale urbana.</p>
+<p>In questo rapporto di ricerca, redatto con l&#x27;obiettivo di fornire un quadro esaustivo e dettagliato delle festività cittadine e rionali, si procederà alla disamina delle celebrazioni non come eventi isolati, ma come &quot;fatti sociali totali&quot;. Si esplorerà l&#x27;asse verticale della devozione patronale, dominato dall&#x27;enigmatica figura dell&#x27;Iconavetere, e l&#x27;asse orizzontale delle feste di quartiere, dove le periferie (dal CEP a Candelaro, dal Rione Martucci a Borgo Croci) negoziano la propria identità e visibilità nello spazio pubblico.</p>
+<p>L&#x27;analisi si fonda su una rigorosa ricognizione delle fonti documentali e cronachistiche, integrando dati storici, percorsi processionali, variazioni liturgiche e dettagli gastronomici, per restituire la &quot;densità&quot; di un patrimonio immateriale che definisce l&#x27;essere foggiani oggi.</p>
+      </div>
+    </details>
+    
+    <details class="accordion" >
+      <summary>
+        <span class="dot"></span>
+        <span class="acc-title">Parte I: L&#x27;Iconavetere e la Fondazione Mistica della Città</span>
+      </summary>
+      <div class="acc-body prose">
+        <p>Al vertice della gerarchia sacra foggiana si colloca, incontrastata, la Madonna dei Sette Veli, o Iconavetere. Il suo culto non è semplicemente devozionale, ma fondativo: Foggia esiste in quanto custodia di questa immagine. La particolarità di questo patronato risiede nella sua doppia scansione temporale — marzo e agosto — che riflette le due anime della città: quella sofferente e penitenziale e quella trionfante e agricola.</p>
+<p>1. Archeologia del Sacro: Il Ritrovamento e il Simbolismo dei Veli</p>
+<p>Le origini del culto affondano nelle nebbie dell&#x27;anno Mille. La tradizione storiografica fissa il ritrovamento del Sacro Tavolo intorno al 1062 o 1073.1 La leggenda di fondazione narra di pastori che, guidati da buoi inginocchiati (topos ricorrente nell&#x27;agiografia meridionale), rinvennero in uno specchio d&#x27;acqua paludoso — l&#x27;attuale Pozzo Rotondo — una tavola di legno avvolta in drappi.</p>
+<p>L&#x27;immagine, che la tradizione attribuisce alla mano di San Luca Evangelista, non fu immediatamente visibile: era celata da sette veli. Questo dettaglio non è ornamentale ma teologico e antropologico. I &quot;sette veli&quot; rappresentano il mistero, la distanza tra il divino e l&#x27;umano, ma anche la protezione necessaria per un oggetto carico di una potenza sacra &quot;pericolosa&quot; se guardata direttamente. La città di Foggia si è letteralmente costruita attorno a questo nucleo misterico, evolvendo da stazione di transumanza a civitas proprio grazie alla forza attrattiva dell&#x27;icona.</p>
+<p>2. Il Trauma del 1731 e la Rifondazione del Culto</p>
+<p>Se il ritrovamento medievale segna la nascita fisica della città, il terremoto del 1731 ne segna la rinascita spirituale. La notte del 20 marzo 1731, un sisma di violenza inaudita devastò Foggia, distruggendo edifici simbolo come il Palazzo della Dogana e lesionando gravemente la Cattedrale.1 Il bilancio fu tragico: le stime dell&#x27;epoca parlarono di migliaia di morti nella città e nelle masserie circostanti.</p>
+<p>In questo scenario apocalittico, il Sacro Tavolo fu estratto dalle macerie della Cattedrale e portato in salvo presso la Chiesa di Santa Maria di Costantinopoli, nel Convento dei Cappuccini. È qui che il 22 marzo, Giovedì Santo, accadde l&#x27;evento che trasformò la devozione in un&#x27;esperienza mistica collettiva. Mentre il popolo era prostrato, il volto della Vergine apparve nitidamente nell&#x27;ovale del tavolo, squarciando i veli.</p>
+<p>La testimonianza di Sant&#x27;Alfonso Maria de&#x27; Liguori, che nel 1745 verificò personalmente il miracolo, è cruciale per comprendere la portata dell&#x27;evento: egli descrisse un &quot;abbagliante raggio di luce&quot; che si staccava dal volto della Vergine, fenomeno osservato da migliaia di persone.2 Queste apparizioni non furono allucinazioni momentanee, ma si ripeterono nel tempo, consolidando un legame indissolubile tra la Madonna e la resilienza dei foggiani. La Madonna dei Sette Veli divenne così non solo la madre, ma la &quot;concittadina&quot; che aveva condiviso il terrore del sisma.</p>
+<p>3. La Doppia Liturgia: Marzo e Agosto</p>
+<p>Il calendario foggiano è strutturato attorno a questa duplicità, generando due feste con &quot;temperature&quot; emotive diverse.</p>
+<p>3.1 La Festa Patronale del 22 Marzo</p>
+<p>La ricorrenza del 22 marzo è festa di precetto e possiede un carattere eminentemente storico e commemorativo.1 È la festa della memoria. Fino a tempi recenti, la processione si svolgeva il 21 o il 22 marzo. Tuttavia, la gestione del calendario ha subito variazioni significative in anni recenti per evitare sovrapposizioni con eventi civili, come la &quot;Giornata della Memoria e dell&#x27;Impegno in ricordo delle vittime innocenti delle mafie&quot; del 21 marzo. Ad esempio, è stata documentata l&#x27;anticipazione della processione al 20 marzo proprio per permettere la piena partecipazione cittadina a entrambi gli eventi.3</p>
+<p>Il Percorso della Memoria:</p>
+<p>Il corteo processionale di marzo è un pellegrinaggio urbano che tocca i luoghi feriti dal sisma e i centri del potere religioso. Un itinerario tipico, soggetto a modifiche per i frequenti cantieri urbani, prevede:</p>
+<ul>
+<li>Partenza dalla Basilica di San Giovanni Battista o dalla Cattedrale.</li>
+<li>Attraversamento di Via della Repubblica e Via Arpi, l&#x27;arteria storica della città medievale e moderna.</li>
+<li>Passaggio per Largo Porta Arpana e Piazza Cardinale Felici.</li>
+<li>Rientro in Cattedrale.3</li>
+</ul>
+<p>Questa processione è spesso vissuta con un raccoglimento austero, dove il silenzio e la preghiera prevalgono sul folclore.</p>
+<p>3.2 La Solennità dell&#x27;Assunta (15 Agosto)</p>
+<p>Il 15 agosto, Ferragosto, Foggia esplode nella sua festa &quot;barocca&quot;. Qui la Madonna dei Sette Veli è celebrata come Regina trionfante. La città, svuotata dalle ferie estive ma ripopolata dagli emigrati di ritorno, si stringe attorno all&#x27;Iconavetere in una processione che sfida la calura estiva.5</p>
+<p>La Benedizione dei Campi in Piazza Villani:</p>
+<p>Un momento centrale, che distingue la processione foggiana da altre celebrazioni mariane, è la sosta in Piazza Villani.3 Qui avviene la benedizione dei campi. Questo rito è il residuo vivente della vocazione granaria di Foggia. La Madonna viene orientata verso le campagne circostanti per propiziare i raccolti futuri e ringraziare per quelli passati. È un gesto che ricuce lo strappo moderno tra città e campagna, ricordando che la ricchezza di Foggia dipende dal grano.</p>
+<p>Il corteo di agosto è sontuoso: le autorità civili in alta uniforme, il clero, le confraternite e una folla oceanica accompagnano il Sacro Tavolo. Il percorso si snoda lungo assi viari ampi come Corso Garibaldi e Corso Vittorio Emanuele II 6, trasformando il centro cittadino in un teatro sacro a cielo aperto. La giornata si conclude con spettacoli pirotecnici che, secondo la tradizione, devono essere visibili da lontano, segnalando la festa a tutto il Tavoliere.7</p>
+<p>4. La Devozione Condivisa: San Giovanni Rotondo</p>
+<p>Un aspetto poco noto ma fondamentale è l&#x27;estensione del culto dell&#x27;Iconavetere oltre le mura cittadine. Anche a San Giovanni Rotondo, la Madonna dei Sette Veli è oggetto di una devozione viscerale. Nei giorni del 14 e 15 agosto, mentre Foggia è in processione, a San Giovanni si pratica il rito della &quot;Vestizione delle Madonne&quot;: i pianterreni delle case vengono trasformati in cappelle, addobbati con coperte di seta, sette veli bianchi e vasi di basilico, ricreando l&#x27;altare dell&#x27;Iconavetere.8 Questo parallelismo rituale dimostra come l&#x27;Iconavetere sia un &quot;marker&quot; identitario per l&#x27;intera Capitanata.</p>
+      </div>
+    </details>
+    
+    <details class="accordion" >
+      <summary>
+        <span class="dot"></span>
+        <span class="acc-title">Parte II: I Santi Compatroni e le Figure Tutelari</span>
+      </summary>
+      <div class="acc-body prose">
+        <p>Sebbene l&#x27;Iconavetere assorba gran parte delle energie devozionali, il pantheon foggiano è ricco di figure che proteggono specifici aspetti della vita cittadina.</p>
+<p>1. San Guglielmo e San Pellegrino</p>
+<p>Compatroni della città, le loro figure sono legate a una devozione più antica, eremitica. La loro festa è oggi meno &quot;popolare&quot; in termini di massa, ma viene mantenuta viva attraverso operazioni culturali di recupero della memoria. Eventi teatrali e musicali, come quelli tenutisi al Teatro Regio, recuperano canti inediti e narrazioni storiche basate sulle cronache dei canonici Manerba e Calvanese, restituendo spessore storico a queste figure spesso oscurate dalla Madonna.9 Rappresentano la radice medievale e pellegrina della città.</p>
+<p>2. San Michele Arcangelo</p>
+<p>Patrono della Provincia di Foggia e della Polizia di Stato, San Michele ha una celebrazione che unisce l&#x27;istituzionale al popolare. La festa del 29 settembre vede spesso una solenne celebrazione in Cattedrale alla presenza delle autorità.10 Tuttavia, la devozione micaelica permea anche i quartieri: la Polizia Locale, ad esempio, ha istituito una tradizione itinerante per la festa di San Sebastiano (loro patrono), celebrando la messa ogni anno in un quartiere diverso (Candelaro, CEP, Ferrovia) per avvicinare le istituzioni alla cittadinanza, spesso associando la figura dell&#x27;Arcangelo alla lotta per la legalità.11</p>
+<p>3. San Ciro: Il Medico Divino</p>
+<p>La devozione per San Ciro, medico, eremita e martire, è intensa e si concentra nella Parrocchia di San Giuseppe (o in altre chiese storiche a seconda delle fonti locali che variano tra Lucera e Foggia, ma con una forte presenza in città). La festa del 31 gennaio è preceduta da un triduo o novena.</p>
+<p>Un elemento distintivo del rito foggiano e delle zone limitrofe è la benedizione dell&#x27;olio di San Ciro e l&#x27;esposizione della reliquia.12 I fedeli si recano in chiesa per l&#x27;unzione, chiedendo guarigioni fisiche e spirituali. La processione, o la fiaccolata serale, porta il simulacro del Santo per le vie, accompagnato dalle bande musicali.13 È una festa che tocca le corde della fragilità umana e della speranza nella cura.</p>
+      </div>
+    </details>
+    
+    <details class="accordion" >
+      <summary>
+        <span class="dot"></span>
+        <span class="acc-title">Parte III: Geografia Sacra dei Quartieri: Identità, Resistenza e Coesione</span>
+      </summary>
+      <div class="acc-body prose">
+        <p>L&#x27;espansione urbanistica di Foggia ha creato quartieri con identità fortissime, spesso nati come borgate isolate e poi inglobati. Qui la festa religiosa diventa lo strumento principale per dire &quot;noi esistiamo&quot;.</p>
+<p>1. Borgo Croci e la Festa di Sant&#x27;Anna (26 Luglio)</p>
+<p>Il Rione Croci è il cuore storico della plebe foggiana, i &quot;terrazzani&quot;. La festa di Sant&#x27;Anna non è solo una ricorrenza, ma l&#x27;affermazione orgogliosa di una cultura subalterna che ha resistito alla modernizzazione.</p>
+<p>Antropologia della Festa:</p>
+<p>La celebrazione si svolge attorno alla Chiesa di Sant&#x27;Anna e a Piazza Sant&#x27;Eligio.14 Sebbene le giostre abbiano sostituito antichi giochi come l&#x27;albero della cuccagna, lo spirito rimane &quot;di pancia&quot;. La processione è accompagnata dalle batterie, fuochi pirotecnici a terra che esplodono ritmicamente al passaggio del Santo.</p>
+<p>A differenza di San Severo, dove si &quot;corre&quot; con i fuochi in modo strutturato e spettacolare (la &quot;Festa del Soccorso&quot;), a Foggia e nel rione Croci le batterie sono più un saluto fragoroso, un&#x27;esplosione di gioia che scaccia il maligno e onora la Santa.15</p>
+<p>Il Cibo Rituale: Lumache e Pizze Fritte:</p>
+<p>Non si può comprendere Sant&#x27;Anna senza il cibo. Il 26 luglio è il giorno delle ciammaruchelle (lumache). La preparazione è un rito: le lumache devono spurgare, poi vengono bollite e condite con aglio, olio e menta. Mangiarle in strada è un atto identitario.17 Accanto a esse, le pizze fritte costituiscono il cibo di strada per eccellenza, economico e saziante. La festa si conclude con concerti di musica napoletana, che a Foggia gode di una popolarità immensa, segnando una continuità culturale con la Campania.</p>
+<p>2. Sant&#x27;Antonio: Il &quot;Derby&quot; Centro-Periferia (13 Giugno)</p>
+<p>La festa di Sant&#x27;Antonio da Padova rivela la bipolarità della città. Le celebrazioni si dividono tra due poli, creando quello che la stampa locale definisce un &quot;derby&quot; devozionale.18</p>
+<ul>
+<li>San Pasquale Baylon (Centro): Qui la festa ha un sapore antico e conventuale. La tradizione cardine è la distribuzione del Pane di Sant&#x27;Antonio.19 Migliaia di panini benedetti vengono offerti ai fedeli, richiamando il miracolo del santo che donava pane ai poveri. La processione attraversa vie storiche come Via Vittime Civili e Corso Garibaldi.20</li>
+<li>Santuario del CEP (Periferia): Nel Centro di Edilizia Popolare, la festa di Sant&#x27;Antonio assume una connotazione di riscatto sociale. La parrocchia, guidata dai frati, organizza un programma imponente che mescola liturgia e spettacolo.21 Nel 2024, ad esempio, tre giorni di eventi hanno visto esibirsi band locali e cantanti neomelodici, trasformando il quartiere in un palcoscenico. La processione qui non è solo devozione, ma occupazione pacifica dello spazio pubblico in un&#x27;area spesso stigmatizzata. Le bancarelle e i fuochi pirotecnici tra i palazzoni creano un&#x27;atmosfera di &quot;paese nella città&quot;.</li>
+</ul>
+<p>3. San Paolo al CEP (29 Giugno)</p>
+<p>Sempre nel quartiere CEP, la festa di San Paolo Apostolo (29 giugno) chiude il mese di giugno. È una festa &quot;giovane&quot;, animata dall&#x27;Oratorio e dall&#x27;Azione Cattolica.</p>
+<p>Il programma prevede tornei sportivi, il Grest (Gruppo Estivo) per i ragazzi e sagre gastronomiche dove si servono panini e prodotti locali per finanziare le attività parrocchiali.22 È un esempio virtuoso di come la festa diventi welfare: il ricavato serve a sostenere le famiglie in difficoltà durante l&#x27;anno. La presenza di ospiti culturali e biblisti di fama (come suor Elena Bosetti citata nelle fonti) eleva il tono della festa oltre il semplice intrattenimento.</p>
+<p>4. San Giovanni Battista: La Festa della Parrocchia (24 Giugno e Maggio)</p>
+<p>Bisogna distinguere tra la Basilica di San Giovanni come punto di partenza delle processioni patronali e la festa parrocchiale vera e propria.</p>
+<p>La parrocchia celebra intensamente la Madonna della Misericordia a fine maggio (spesso il 25 maggio). È una festa preceduta dalla peregrinatio dell&#x27;icona nei vari condomini della parrocchia, portando il sacro dentro le case private.23</p>
+<p>La festa liturgica di San Giovanni Battista (24 giugno) vede anch&#x27;essa celebrazioni solenni. Essendo una delle chiese più antiche e importanti (Basilica Minore), la sua festa ha un rilievo cittadino, con processioni che in passato hanno visto la partecipazione di grandi folle e concerti in piazza.24</p>
+<p>5. Rione Martucci e la Parrocchia Maria Regina della Pace</p>
+<p>Nel Rione Martucci, la festa acquisisce un valore civico esplicito. La &quot;Festa del Rione&quot; e il &quot;Natale in Casa Martucci&quot; sono eventi costruiti in sinergia tra la parrocchia (Maria Regina della Pace) e la scuola media &quot;Dante Alighieri&quot;.25</p>
+<p>Il focus è sulla legalità: si installano targhe in memoria delle vittime di mafia (come Francesco Marcone e Nicola Ciuffreda), trasformando la festa in un momento di educazione civica. Non ci sono solo bancarelle, ma riflessioni sulla cittadinanza attiva. Questo segna un&#x27;evoluzione interessante: la festa non serve solo a dimenticare i problemi, ma ad affrontarli comunitariamente.</p>
+      </div>
+    </details>
+    
+    <details class="accordion" >
+      <summary>
+        <span class="dot"></span>
+        <span class="acc-title">Parte IV: Il Tempo del Lutto e della Speranza – La Settimana Santa</span>
+      </summary>
+      <div class="acc-body prose">
+        <p>La Settimana Santa a Foggia è un crescendo drammatico che culmina nel Venerdì Santo, giorno in cui la città si ferma per i riti della Passione.</p>
+<p>1. La Processione dei Misteri e l&#x27;Incontro</p>
+<p>Il Venerdì Santo si svolge la processione detta &quot;dei Misteri&quot;. Dalla Cattedrale escono le statue raffiguranti le stazioni della Via Crucis, opere d&#x27;arte che vengono portate a spalla dai confratelli incappucciati o in abito liturgico.</p>
+<p>Il momento apicale, atteso da tutta la cittadinanza, è l&#x27;Incontro (o &quot;lo scontro&quot;, nel gergo dialettale per indicare il fronteggiarsi delle statue) tra la statua dell&#x27;Addolorata e quella del Cristo Morto. Questo avviene tradizionalmente in Piazza XX Settembre, davanti alla Chiesa di San Francesco Saverio (detta &quot;delle Colonne&quot;).</p>
+<p>Analisi del Rito:</p>
+<p>Le due processioni, partite separatamente o snodatesi per vie diverse, convergono nella piazza. Al suono delle marce funebri, le statue si &quot;guardano&quot;. È un momento di pathos estremo: il dolore della Madre incontra il corpo del Figlio. Il silenzio della folla è rotto solo dalla musica e, talvolta, dalle omelie del Vescovo. Tuttavia, le cronache recenti 27 segnalano tensioni tra le confraternite e la curia, con episodi in cui il Vescovo ha disertato l&#x27;Incontro, segno di un conflitto latente tra la gestione &quot;popolare&quot; e autonoma del sacro da parte delle confraternite e la volontà normalizzatrice della gerarchia ecclesiastica.</p>
+      </div>
+    </details>
+    
+    <details class="accordion" >
+      <summary>
+        <span class="dot"></span>
+        <span class="acc-title">Parte V: Pellegrinaggi Fuori Porta – L&#x27;Incoronata</span>
+      </summary>
+      <div class="acc-body prose">
+        <p>Sebbene tecnicamente fuori dal centro urbano, il Santuario della Madonna dell&#x27;Incoronata è parte integrante del sistema festivo foggiano. L&#x27;ultimo sabato di aprile si celebra l&#x27;apparizione della Vergine (avvenuta nell&#x27;anno 1001 su una quercia).</p>
+<p>La Cavalcata degli Angeli</p>
+<p>Il venerdì precedente la festa si svolge la &quot;Cavalcata degli Angeli&quot;: un corteo sfarzoso di carri allegorici e cavalli bardati a festa, su cui sfilano bambini vestiti da angeli, santi e madonne.19 È una tradizione che unisce la cultura contadina del Tavoliere con la devozione visiva e teatrale.</p>
+<p>Il pellegrinaggio al santuario prevede il rito della unzione con l&#x27;olio sacro e il giro attorno all&#x27;altare. La festa è anche un grande mercato etnico e agricolo, dove si vendono animali, attrezzi e dolciumi. Caratteristici sono i &quot;pennacchi&quot; colorati che i pellegrini acquistano per adornare le auto al ritorno, segnale visibile dell&#x27;avvenuto pellegrinaggio.</p>
+      </div>
+    </details>
+    
+    <details class="accordion" >
+      <summary>
+        <span class="dot"></span>
+        <span class="acc-title">Parte VI: Le Fiere e il Ciclo Economico</span>
+      </summary>
+      <div class="acc-body prose">
+        <p>Le fiere a Foggia sono i marcatori del tempo economico.</p>
+<p>1. Fiera di Santa Caterina (25 Novembre)</p>
+<p>Storicamente, questa fiera segnava la fine dei contratti agrari e l&#x27;inizio dell&#x27;inverno. Oggi è la fiera che anticipa il Natale.28</p>
+<p>Tradizionalmente situata in via Galliani, era il luogo magico per i bambini, con le giostre della famiglia Alberini e le bancarelle di giocattoli. Lo spostamento in periferia (zona Ipercoop/Via Miranda) ne ha in parte diluito l&#x27;atmosfera, creando una frattura nostalgica nella memoria collettiva.29 Tuttavia, rimane l&#x27;appuntamento imprescindibile per l&#x27;acquisto del presepe e degli addobbi.</p>
+<p>2. Fiera dei Morti e Ognissanti (1-2 Novembre)</p>
+<p>Legata al culto dei defunti, questa ricorrenza è meno &quot;di piazza&quot; e più domestica, ma un tempo vedeva mercati specifici per l&#x27;acquisto di vestiti invernali e rame. Oggi sopravvive soprattutto nella dimensione gastronomica.</p>
+      </div>
+    </details>
+    
+    <details class="accordion" >
+      <summary>
+        <span class="dot"></span>
+        <span class="acc-title">Parte VII: Gastronomia Rituale – Il Sapore della Festa</span>
+      </summary>
+      <div class="acc-body prose">
+        <p>A Foggia, la liturgia si mangia. Ogni festa ha un codice alimentare rigido che non ammette deroghe.</p>
+<p>Tabella 2: Sinossi Gastronomica delle Feste Foggiane</p>
+<p>Festività</p>
+<p>Piatto Rituale</p>
+<p>Ingredienti Chiave</p>
+<p>Significato Antropologico</p>
+<p>Sant&#x27;Anna (26/07)</p>
+<p>Ciammaruchelle (Lumache)</p>
+<p>Lumache di terra, aglio, menta, peperoncino.</p>
+<p>Cibo di raccolta, legame con la terra incolta e la povertà dignitosa dei terrazzani.</p>
+<p>Ferragosto (15/08)</p>
+<p>Galluccio Ripieno</p>
+<p>Gallo ruspante (3kg), uova, pane, formaggio, uva passa.</p>
+<p>Sacrificio solare. Il gallo vecchio si sacrifica per la festa grande. Ripieno ricco come auspicio di abbondanza.31</p>
+<p>Morti (02/11)</p>
+<p>Grano dei Morti (Cicc cuott)</p>
+<p>Grano bollito, melograno, noci, cioccolato, vincotto, cannella.</p>
+<p>Simbologia di morte e rinascita (grano), sangue (melograno), cervello/sapienza (noci), dolcezza dopo l&#x27;amaro (cioccolato).33</p>
+<p>Natale</p>
+<p>Cartellate e Pettole</p>
+<p>Pasta fritta, vincotto o miele.</p>
+<p>Le fasce di Gesù Bambino (cartellate). Abbondanza e frittura come segno di festa.</p>
+<p>Venerdì Santo</p>
+<p>Benedetto (Antipasto)</p>
+<p>Salame, ricotta, uova sode, arance affettate.</p>
+<p>Rottura del digiuno quaresimale (si mangia a Pasqua, ma talvolta anticipato).</p>
+<p>Analisi del Galluccio:</p>
+<p>Il galluccio di Ferragosto è forse il piatto più rappresentativo. Non è un semplice pollo arrosto. Deve essere un gallo ruspante, allevato a terra, macellato per l&#x27;occasione. La preparazione del ripieno è elaborata e richiede ore. Viene cotto al forno con patate. Mangiarlo il 15 agosto è un obbligo morale: &quot;A Ferragosto, a Foggia, non canta nessun gallo&quot; recita un detto, a significare l&#x27;ecatombe culinaria che onora la Vergine.31</p>
+<p>Il Grano dei Morti:</p>
+<p>La Colva o Cicc cuott è un dolce arcaico, forse di origine greca (kolyva). La sua preparazione è un atto di pietà verso i defunti. Gli ingredienti sono tutti simbolici: il grano che muore nella terra per rinascere, il melograno che richiama il mito di Proserpina e il mondo sotterraneo, il vincotto che è il sangue della terra. È un dolce che educa al ciclo della vita.33</p>
+      </div>
+    </details>
+    
+    <details class="accordion" >
+      <summary>
+        <span class="dot"></span>
+        <span class="acc-title">Conclusioni: Una Città in Processione</span>
+      </summary>
+      <div class="acc-body prose">
+        <p>L&#x27;analisi del ciclo festivo di Foggia ci restituisce l&#x27;immagine di una città complessa, dove la tradizione non è un rifugio passivo ma uno strumento attivo di negoziazione sociale.</p>
+<p>1. Resilienza e Memoria: Attraverso l&#x27;Iconavetere, Foggia elabora ciclicamente i suoi traumi storici (il terremoto), trasformando la paura in liturgia.</p>
+<p>2. Centro vs Periferia: Le feste di quartiere (Sant&#x27;Antonio al CEP, Sant&#x27;Anna ai Croci) fungono da contrappeso alla centralità della Cattedrale, rivendicando dignità e spazio per le zone marginali.</p>
+<p>3. Sacro e Profano: La commistione tra la mistica dei Sette Veli e la carnalità del Galluccio ripieno o delle batterie pirotecniche definisce l&#x27;essenza del barocco foggiano: una spiritualità che deve essere vista, toccata, mangiata e ascoltata.</p>
+<p>In definitiva, le feste di Foggia sono la grammatica con cui la comunità scrive la propria storia anno dopo anno, una processione continua tra le macerie del passato e le speranze del futuro.</p>
+<p>Riferimenti e Fonti Utilizzati nel Testo</p>
+<p>Ogni affermazione è supportata dall&#x27;analisi incrociata dei seguenti materiali di ricerca:</p>
+<ul>
+<li>Ciclo Iconavetere e Terremoto:.1</li>
+<li>Santi Compatroni e San Ciro:.9</li>
+<li>Quartieri e Feste Rionali (Croci, CEP, Candelaro, Martucci):.14</li>
+<li>Settimana Santa e Incoronata:.19</li>
+<li>Fiere e Tradizioni:.16</li>
+<li>Gastronomia:.31</li>
+</ul>
+<p>Bibliografia</p>
+<p>1. Foggia, solenni Festeggiamenti in onore della Madonna dei Sette Veli (programma), accesso eseguito il giorno gennaio 11, 2026, https://www.statoquotidiano.it/31/07/2024/foggia-solenni-festeggiamenti-in-onore-della-madonna-dei-sette-veli-programma/1124849/</p>
+<p>2. 22 marzo-sospensione attività per festività del Santo Patrono - Dipartimento di Economia, accesso eseguito il giorno gennaio 11, 2026, https://www.economia.unifg.it/it/avvisi/22-marzo-sospensione-attivita-festivita-del-santo-patrono</p>
+<p>3. Foggia, giovedì festa patronale: la processione della Madonna dei Sette Veli anticipata a domani, cambia percorso - Il Mattino Quotidiano, accesso eseguito il giorno gennaio 11, 2026, https://www.ilmattinoquotidiano.it/news/foggia/36260/foggia-giovedi-festa-patronale-la-processione-della-madonna-dei-sette-veli-anticipata-a-domani-cambia-percorso.html</p>
+<p>4. Ecco la piccola Processione della Madonna dei 7 Veli, Patrona di Foggia - Foto 1 di 8, accesso eseguito il giorno gennaio 11, 2026, https://www.lagazzettadelmezzogiorno.it/gallery/foggia/1389045/ecco-la-piccola-processione-della-madonna-dei-7-veli-patrona-di-foggia.html</p>
+<p>5. Madonna dei Sette Veli, Valerio: &quot;Storia e tradizione di Foggia&quot; - InsideCapitanata, accesso eseguito il giorno gennaio 11, 2026, https://www.insidecapitanata.it/madonna-dei-sette-veli-valerio-storia-e-tradizione-di-foggia/</p>
+<p>6. Foggia tra fede e tradizione: la processione dell&#x27;Iconavetere attraversa il cuore della città, accesso eseguito il giorno gennaio 11, 2026, https://www.immediato.net/2025/03/21/foggia-tra-fede-e-tradizione-la-processione-delliconavetere-attraversa-il-cuore-della-citta/</p>
+<p>7. Foggia, le iniziative per la festa patronale. Ok fuochi - Stato Quotidiano, accesso eseguito il giorno gennaio 11, 2026, https://www.statoquotidiano.it/10/08/2017/foggia-le-iniziative-la-festa-patronale-ok-fuochi/564268/</p>
+<p>8. Madonna dei Sette Veli, non solo Foggia. La &quot;Vestizione&quot; a San Giovanni Rotondo - Lettere Meridiane, accesso eseguito il giorno gennaio 11, 2026, http://letteremeridiane.blogspot.com/2018/08/madonna-dei-sette-veli-non-solo-foggia.html</p>
+<p>9. La storia della Madonna dei Sette Veli a teatro, con Norillo e Mancini nei panni di S. Guglielmo e Pellegrino - Il Mattino Quotidiano, accesso eseguito il giorno gennaio 11, 2026, https://www.ilmattinoquotidiano.it/news/cultura/20317/Foggia-Madonna-dei-Sette-Veli-incontro-spettacolo-presso-Teatro-Regio-con-Michele-Dell-Anno-e-Giustina-Ruggiero.html</p>
+<p>10. Festa del Santo Patrono, San Michele Arcangelo. - Questura di Foggia | Polizia di Stato, accesso eseguito il giorno gennaio 11, 2026, https://questure.poliziadistato.it/it/Foggia/articolo/161766fbadc2f10f8688353352</p>
+<p>11. San Sebastiano 2020 – Festa del Corpo di Polizia Locale, accesso eseguito il giorno gennaio 11, 2026, https://polizialocale.comune.foggia.it/pl/2020/01/18/san-sebastiano-2020/</p>
+<p>12. Tutto pronto per la festa di San Ciro nella Parrocchia di San Giuseppe - Trani news24city, accesso eseguito il giorno gennaio 11, 2026, https://trani.news24.city/2019/01/21/pronto-la-festa-san-ciro-nella-parrocchia-san-giuseppe/</p>
+<p>13. FESTEGGIAMENTI IN ONORE DI SAN CIRO - Civico93 | Be original, accesso eseguito il giorno gennaio 11, 2026, https://www.civico93.it/festeggiamenti-in-onore-di-san-ciro-2/</p>
+<p>14. Festa di Sant&#x27;Anna con inaugurazione: Piazza Sant&#x27;Eligio &quot;riapre&quot; il 24 luglio - Foggia Città Aperta, accesso eseguito il giorno gennaio 11, 2026, https://www.foggiacittaaperta.it/news/read/festa-santanna-con-inaugurazione-piazza-santeligio-riapre-24-luglio</p>
+<p>15. La processione di S. Anna 2024 - Foggia - YouTube, accesso eseguito il giorno gennaio 11, 2026, https://www.youtube.com/watch?v=f-OeJa3UdCs</p>
+<p>16. Apluvia - U&#x27;Tavlir, accesso eseguito il giorno gennaio 11, 2026, http://utavlir.blogspot.com/p/apluvia.html</p>
+<p>17. Giostre, &#x27;ciammaruchelle&#x27; e altre storie. La festa di Sant&#x27;Anna a Foggia è sempre uno spettacolo - l&#x27;Immediato, accesso eseguito il giorno gennaio 11, 2026, https://www.immediato.net/2016/07/27/giostre-ciammaruchelle-e-altre-storie-la-festa-di-santanna-a-foggia-e-sempre-uno-spettacolo/</p>
+<p>18. A Foggia il derby per la festa di S.Antonio: due processioni, a San Pasquale e al santuario al Cep, accesso eseguito il giorno gennaio 11, 2026, https://www.lagazzettadelmezzogiorno.it/news/foggia/1512540/a-foggia-il-derby-per-la-festa-di-s-antonio-due-processioni-a-san-pasquale-e-al-santuario-al-cep.html</p>
+<p>19. Le ricorrenze religiose - Manganofoggia.it, accesso eseguito il giorno gennaio 11, 2026, https://manganofoggia.it/le-ricorrenze-religiose/</p>
+<p>20. Foggia si prepara alle celebrazioni per Sant&#x27;Antonio: modifiche alla circolazione per le due processioni del 12 e 13 giugno - StatoQuotidiano, accesso eseguito il giorno gennaio 11, 2026, https://www.statoquotidiano.it/11/06/2025/foggia-si-prepara-alle-celebrazioni-per-santantonio-modifiche-alla-circolazione-per-le-due-processioni-del-12-e-13-giugno/1210170/</p>
+<p>21. Foggia, successo per la Festa di Sant&#x27;Antonio. Tre giorni di fede, musica e condivisione per un quartiere unito - l&#x27;Immediato, accesso eseguito il giorno gennaio 11, 2026, https://www.immediato.net/2024/06/15/foggia-successo-per-la-festa-di-santantonio-tre-giorni-di-fede-musica-e-condivisione-per-un-quartiere-unito/</p>
+<p>22. San Paolo, si fa festa al quartiere Cep: musica, cibo, tradizioni e religione - Foggia Città Aperta, accesso eseguito il giorno gennaio 11, 2026, https://www.foggiacittaaperta.it/news/read/san-paolo-festa-quartiere-cep-foggia-musica-cibo-tradizioni-religione</p>
+<p>23. Diocesi, NEWS ON LINE » Torna la Festa della Madonna della Misericordia - Lucerabynight.it, accesso eseguito il giorno gennaio 11, 2026, https://lucerabynight.it/torna-la-festa-della-madonna-della-misericordia/</p>
+<p>24. La festa patronale di San Giovanni Battista si accende col rapper Clementino - QuotidianodiFoggia.it, accesso eseguito il giorno gennaio 11, 2026, https://quotidianodifoggia.it/la-festa-patronale-di-san-giovanni-battista-si-accende-col-rapper-clementino/</p>
+<p>25. Festa del Rione, buona la prima: proposte, partecipazione e targhe della legalità al Martucci - Foggia Città Aperta, accesso eseguito il giorno gennaio 11, 2026, https://www.foggiacittaaperta.it/news/read/festa-rione-proposte-partecipazione-targhe-legalita-rione-martucci</p>
+<p>26. “Natale in Casa Martucci”, la festa di quartiere: oltre 100 doni e una rete di solidarietà, accesso eseguito il giorno gennaio 11, 2026, https://www.statoquotidiano.it/17/12/2025/natale-in-casa-martucci-la-festa-di-quartiere-oltre-100-doni-e-una-rete-di-solidarieta/1265493/</p>
+<p>27. Foggia, mistero dei «Misteri» in processione senza il vescovo - Gazzetta del Mezzogiorno, accesso eseguito il giorno gennaio 11, 2026, https://www.lagazzettadelmezzogiorno.it/news/home/998603/foggia-mistero-dei-misteri-in-processione-senza-il-vescovo.html</p>
+<p>28. Fiera di Santa Caterina: chi era questa Santa tanto cara ai foggiani? - Stato Quotidiano, accesso eseguito il giorno gennaio 11, 2026, https://www.statoquotidiano.it/25/11/2022/fiera-di-santa-caterina-chi-era-questa-santa-tanto-cara-ai-foggiani/961956/</p>
+<p>29. C&#x27;era una volta a Foggia la Fiera di Santa Caterina - Il Mattino Quotidiano, accesso eseguito il giorno gennaio 11, 2026, https://www.ilmattinoquotidiano.it/news/foggia/586/C-era-una-volta-a-Foggia.html</p>
+<p>30. amarcord: la fiera di santa caterina di foggia - LuceraNet.it, accesso eseguito il giorno gennaio 11, 2026, http://www.luceranet.it/Articolo/AMARCORD__LA_FIERA_DI_SANTA_CATERINA_DI_FOGGIA/3991</p>
+<p>31. A Ferragosto a Foggia non canta nessun gallo - Di Testa e Di Gola, accesso eseguito il giorno gennaio 11, 2026, https://www.ditestaedigola.com/a-ferragosto-a-foggia-non-canta-nessun-gallo/</p>
+<p>32. Il Galluccio: la tradizione foggiana che non può mancare a tavola - Stato Quotidiano, accesso eseguito il giorno gennaio 11, 2026, https://www.statoquotidiano.it/13/08/2022/il-galluccio-la-tradizione-foggiana-che-non-puo-mancare-a-tavola/946854/</p>
+<p>33. Grano dei morti - Ricetta pugliese 100% vegana - Vegolosi.it, accesso eseguito il giorno gennaio 11, 2026, https://www.vegolosi.it/ricette-vegane/grano-dei-morti/</p>
+<p>34. Colva pugliese (grano dei morti): la ricetta del dolce tipico per il 2 novembre - Cookist, accesso eseguito il giorno gennaio 11, 2026, https://www.cookist.it/colva-pugliese-grano-dei-morti/</p>
+<p>35. lucera, il gruppo liu.bo ed i leoni d&#x27;oro alla festa in onore di san ciro - LuceraNet.it, accesso eseguito il giorno gennaio 11, 2026, http://www.luceranet.it/Articolo/LUCERA_IL_GRUPPO_LIUBO_ED_I_LEONI_D39ORO_ALLA_FESTA_IN_ONORE_DI_SAN_CIRO/4226</p>
+<p>36. A Borgo Incoronata, Segezia, Candelaro e Cep c&#x27;è &quot;Aperta per (i) ferie&quot; - rec24.it, accesso eseguito il giorno gennaio 11, 2026, https://www.rec24.it/2016/07/a-borgo-incoronata-segezia-candelaro-e-cep-ce-aperta-per-i-ferie/</p>
+<p>37. Eventi trascorsi dal Luglio 15, 2025 – Marzo 8, 2025 – Pagina 2 - Ambito Territoriale Sociale - Comune di Foggia, accesso eseguito il giorno gennaio 11, 2026, https://ambitoterritoriale.comune.foggia.it/events/elenco/pagina/2/?tribe-bar-date=2025-10-22&amp;eventDisplay=past</p>
+<p>38. Il rito di Sant&#x27;Anna | La ricerca etnografica in Capitanata, accesso eseguito il giorno gennaio 11, 2026, https://ricercaetnografica.wordpress.com/2015/07/24/il-rito-di-santanna/</p>
+<p>39. Festa di Natale per i bambini e le bambine del quartiere Candelaro, accesso eseguito il giorno gennaio 11, 2026, https://www.studiumanistici.unifg.it/it/tutte-le-iniziative/festa-di-natale-i-bambini-e-le-bambine-del-quartiere-candelaro</p>
+<p>40. Chiesa della Beata Maria Vergine Regina della Pace (Foggia) - Cathopedia, accesso eseguito il giorno gennaio 11, 2026, https://it.cathopedia.org/wiki/Chiesa_della_Beata_Maria_Vergine_Regina_della_Pace_(Foggia)</p>
+<p>41. Foggia. Fra devoti e tradizione vanno in scena i riti della settimana santa - StatoQuotidiano, accesso eseguito il giorno gennaio 11, 2026, https://www.statoquotidiano.it/12/04/2022/foggia-fra-devoti-e-tradizione-vanno-in-scena-i-riti-della-settimana-santa/925157/</p>
+<p>42. Foggia, torna la Fiera di Santa Caterina: una tradizione da 200 anni - InsideCapitanata, accesso eseguito il giorno gennaio 11, 2026, https://www.insidecapitanata.it/foggia-torna-la-fiera-di-santa-caterina-una-tradizione-da-200-anni/</p>
+<p>43. L&#x27;accensione della fanòje, tradizione da recuperare - La Gazzetta del Mezzogiorno, accesso eseguito il giorno gennaio 11, 2026, https://www.lagazzettadelmezzogiorno.it/news/punti-di-vista/1602334/laccensione-della-fanoje-tradizione-da-recuperare.html</p>
+<p>44. Il &#x27;grano cotto&#x27; simbolo di vita: ricetta del &#x27;grano dei morti&#x27; pugliese - PAT Puglia, accesso eseguito il giorno gennaio 11, 2026, https://www.patpuglia.it/it/17/Il_%E2%80%98grano_cotto%E2%80%99_simbolo_di_vita:_ricetta_del_%E2%80%98grano_dei_morti%E2%80%99_pugliese/38</p>
+      </div>
+    </details>
+    
+        </div>
+      </section>
+
+      <section id="fonti" class="notes">
+        <h2>Note</h2>
+        <p>
+          Questa web app impagina e rende consultabile il testo fornito dall’autore, aggiungendo una mappa
+          con geolocalizzazione dei luoghi citati. La posizione dei marker è ottenuta tramite geocoding pubblico
+          (OpenStreetMap Nominatim) a partire dai nomi dei luoghi.
+        </p>
+        <p class="small">
+          Build locale: nessun backend, nessun tracciamento. Tutto gira in un browser moderno.
+        </p>
+      </section>
+
+      <footer class="footer">
+        <div class="small">Ultimo aggiornamento: 2026-01-11</div>
+        <div class="small">© Web app didattica — uso scolastico</div>
+      </footer>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="app.js"></script>
+</body>
+</html>
