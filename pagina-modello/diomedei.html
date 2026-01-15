@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>I Campi Diomedei</title>
+  <meta name="description" content="Pagina didattica multimediale sui Campi Diomedei (Foggia): immagine, mappa, video e 3D." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header class="topbar" aria-label="Barra superiore">
+    <a class="topbar__home" href="index.html" title="Torna alla prima pagina" aria-label="Torna alla prima pagina">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"></path>
+      </svg>
+      <span>Home</span>
+    </a>
+    <div class="topbar__title">
+      <span class="badge">Foggia</span>
+      <span class="sep">•</span>
+      <span class="muted">Tappa</span>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- Area Media (sinistra) -->
+    <section class="media" aria-label="Area media">
+      <div class="media__frame" role="region" aria-label="Contenuto multimediale">
+        <div class="media__loading" id="mediaLoading" hidden>Caricamento…</div>
+        <div id="mediaStage" class="media__stage"></div>
+      </div>
+
+      <nav class="media__nav" aria-label="Selettore media">
+        <button class="pill active" data-view="image" type="button" aria-pressed="true">
+          <span class="pill__num">0</span><span class="pill__label">Immagine</span>
+        </button>
+        <button class="pill" data-view="map" type="button" aria-pressed="false">
+          <span class="pill__num">1</span><span class="pill__label">Mappa</span>
+        </button>
+        <button class="pill" data-view="video" type="button" aria-pressed="false">
+          <span class="pill__num">2</span><span class="pill__label">Video</span>
+        </button>
+        <button class="pill" data-view="sketchfab" type="button" aria-pressed="false">
+          <span class="pill__num">3</span><span class="pill__label">3D</span>
+        </button>
+        <a class="pill pill--link" href="approfondimento.html" aria-label="Apri approfondimento">
+          <span class="pill__num">4</span><span class="pill__label">Approfondimento</span>
+        </a>
+      </nav>
+
+      <p class="media__hint">
+        Suggerimento: su tablet, scorri e usa i pulsanti per cambiare contenuto senza perdere il testo.
+      </p>
+    </section>
+
+    <!-- Area Testo (destra) -->
+    <section class="text" aria-label="Testo">
+      <h1 class="text__h1">I Campi Diomedei</h1>
+      <h2 class="text__h2">Parco urbano e villaggio neolitico nel cuore di Foggia</h2>
+
+      <div class="text__body">
+        <p>Campi Diomedei custodiscono, nel cuore di Foggia, i resti di uno dei più antichi villaggi neolitici d’Italia, risalente a circa 6.000 anni a.C. Qui sono emerse tracce di capanne, focolari, fossati difensivi, utensili in pietra e ceramica, insieme alle testimonianze delle prime attività agricole e di allevamento nel Tavoliere. Tra i ritrovamenti più importanti vi è lo scheletro di un uomo del VI millennio a.C., noto come “Siro”, considerato il più antico abitante conosciuto della Daunia. Oggi l’area è parte del Parco Urbano dei Campi Diomedei, dove natura e archeologia si incontrano, ricordando che sotto la città moderna sopravvive la sua origine più antica.</p>
+
+        <div class="info">
+          <div class="info__icon" aria-hidden="true">i</div>
+          <div class="info__content">
+            <div class="info__title">Coordinate</div>
+            <div class="info__text">41.458022, 15.563635</div>
+          </div>
+        </div>
+
+        <div class="ctaRow">
+          <a class="btn" href="approfondimento.html">Leggi l’approfondimento</a>
+          <button class="btn btn--ghost" type="button" id="btnBackToImage">Torna all’immagine</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© Web App didattica • Struttura leggera, compatibile con GitHub Pages</span>
+  </footer>
+
+  <script src="js/three_scene.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
