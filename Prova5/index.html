@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hotspot Immagini — Editor & Presentazione</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◎</span>
+      <span class="title">Hotspot Immagini</span>
+      <span class="subtitle">Editor / Presentazione</span>
+    </div>
+
+    <nav class="modeSwitch" aria-label="Modalità">
+      <button id="btnEditor" class="btn" type="button" title="Modalità Editor">Editor</button>
+      <button id="btnPresent" class="btn" type="button" title="Modalità Presentazione">Presentazione</button>
+    </nav>
+
+    <div class="topActions">
+      <button id="btnExport" class="btn ghost" type="button" title="Esporta progetto (JSON)">Esporta</button>
+      <label class="btn ghost fileLabel" title="Importa progetto (JSON)">
+        Importa
+        <input id="fileImport" type="file" accept="application/json" />
+      </label>
+      <button id="btnReset" class="btn danger ghost" type="button" title="Azzera progetto">Reset</button>
+    </div>
+  </header>
+
+  <main class="app">
+    <!-- EDITOR -->
+    <section id="viewEditor" class="view" aria-label="Editor">
+      <aside class="sidebar">
+        <div class="panel">
+          <div class="panelTitle">Repository immagini</div>
+          <div class="panelBody">
+            <div class="row">
+              <label class="btn fileLabel primary" title="Aggiungi immagini">
+                + Aggiungi
+                <input id="fileImages" type="file" accept="image/*" multiple />
+              </label>
+              <button id="btnNewSlide" class="btn" type="button" title="Nuova diapositiva vuota">Nuova</button>
+            </div>
+
+            <div id="repo" class="repo" aria-label="Elenco immagini"></div>
+            <div class="hint">
+              Suggerimento: seleziona un'immagine, poi aggiungi forme. In Editor si vede solo il <b>perimetro</b>.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panelTitle">Strumenti forme</div>
+          <div class="panelBody">
+            <div class="toolbar">
+              <button id="toolSelect" class="tool active" type="button">Seleziona</button>
+              <button id="toolRect" class="tool" type="button">Rettangolo</button>
+              <button id="toolEllipse" class="tool" type="button">Ellisse</button>
+              <button id="toolPoly" class="tool" type="button">Poligono</button>
+            </div>
+
+            <div class="fieldset">
+              <div class="label">Azione hotspot (selezionato)</div>
+              <select id="actionType">
+                <option value="text">Testo (popup)</option>
+                <option value="link">Link (apri)</option>
+              </select>
+              <textarea id="actionValue" rows="4" placeholder="Scrivi testo oppure incolla un link…"></textarea>
+              <div class="row">
+                <button id="btnApplyAction" class="btn primary" type="button">Applica</button>
+                <button id="btnDelete" class="btn danger" type="button">Elimina</button>
+              </div>
+            </div>
+
+            <div class="fieldset">
+              <div class="label">Diapositive</div>
+              <div class="row">
+                <button id="btnPrevSlide" class="btn" type="button">◀</button>
+                <div id="slideCounter" class="counter">0 / 0</div>
+                <button id="btnNextSlide" class="btn" type="button">▶</button>
+              </div>
+              <div class="row">
+                <button id="btnSetAsFirst" class="btn ghost" type="button" title="Imposta questa come prima">Prima</button>
+                <button id="btnRemoveSlide" class="btn danger ghost" type="button" title="Rimuovi diapositiva">Rimuovi</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </aside>
+
+      <section class="stageWrap" aria-label="Area di lavoro">
+        <div class="stageHeader">
+          <div id="stageTitle" class="stageTitle">Nessuna immagine selezionata</div>
+          <div class="stageHint">Trascina i punti per deformare. Trascina la forma per spostarla.</div>
+        </div>
+
+        <div id="stage" class="stage" tabindex="0" aria-label="Canvas immagine con hotspot">
+          <!-- Image + SVG injected by JS -->
+          <div class="emptyState">
+            <div class="emptyIcon">⬚</div>
+            <div class="emptyText">
+              Carica o seleziona un'immagine nel repository per iniziare.
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- PRESENTATION -->
+    <section id="viewPresent" class="view" aria-label="Presentazione">
+      <div class="presentTop">
+        <button id="btnHome" class="btn iconBtn" type="button" title="Torna alla prima diapositiva" aria-label="Home">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 10v11h6v-7h6v7h6V10z"/></svg>
+        </button>
+        <div class="presentNav">
+          <button id="btnPrevP" class="btn" type="button" title="Precedente">◀</button>
+          <div id="presentCounter" class="counter">0 / 0</div>
+          <button id="btnNextP" class="btn" type="button" title="Successiva">▶</button>
+        </div>
+        <div class="presentTitle" id="presentTitle">Presentazione</div>
+      </div>
+
+      <div id="presentStage" class="presentStage" aria-label="Schermo presentazione">
+        <!-- injected -->
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Popup">
+    <div class="modalCard">
+      <div class="modalHeader">
+        <div class="modalTitle">Info</div>
+        <button id="btnCloseModal" class="btn ghost" type="button">Chiudi</button>
+      </div>
+      <div id="modalBody" class="modalBody"></div>
+    </div>
+    <div class="modalBackdrop" id="modalBackdrop" aria-hidden="true"></div>
+  </div>
+
+  <footer class="footer">
+    <span>Salvataggio locale: <b>localStorage</b> (nel tuo browser).</span>
+    <span class="sep">•</span>
+    <span>Consiglio: usa <b>Esporta</b> per portare il progetto su un altro PC.</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
